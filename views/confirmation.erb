@@ -8,15 +8,7 @@
 
 <h1>Confirmation</h1>
 
-<% case @status %>
-<% when :ok %>
-<p>Your request has been accepted.
-You should receive a confirmation email shortly.</p>
-<% when :failure %>
-<p>Sorry, an error occurred during processing of your request.</p>
-<% when :invalid %>
-<p>Your request is invalid.</p>
-<% end %>
+<p><%= @message %></p>
 
 <p>Submitted data:</p>
 
