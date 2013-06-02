@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Confirmation</title>
+</head>
+<body>
+
+<h1>Confirmation</h1>
+
+<% case @status %>
+<% when :ok %>
+<p>Your request has been accepted.
+You should receive a confirmation email shortly.</p>
+<% when :failure %>
+<p>Sorry, an error occurred during processing of your request.</p>
+<% when :invalid %>
+<p>Your request is invalid.</p>
+<% end %>
+
+<p>Submitted data:</p>
+
+<table>
+<tr><td>Mailing List:&nbsp;&nbsp;</td>
+<td><%= @ml_request.list %></td></tr>
+<tr><td>First Name:</td>
+<td><%= @ml_request.first_name %></td></tr>
+<tr><td>Last Name:</td>
+<td><%= @ml_request.last_name %></td></tr>
+<tr><td>Mail:</td>
+<td><%= @ml_request.email %></td></tr>
+<tr><td>Action:</td>
+<td><%= @ml_request.action %></td></tr>
+</table>
+
+</body>
+</html>
