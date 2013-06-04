@@ -1,0 +1,71 @@
+/*** reset all ***/
+
+html, body, body div, span, object, iframe, h1, h2, h3, h4, h5, h6,
+p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd,
+q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, table, caption, tbody, tfoot, thead,
+tr, th, td, article, aside, figure, footer, header, hgroup, menu, nav,
+section, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+
+/*** for old browsers (new HTML5 tags) ***/
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+/*** general behavior ***/
+
+/* force a vertical scrollbar to prevent a jumpy page */
+html { overflow-y: scroll; }
+
+/* focus: outline visible for users tabbing through the page
+a { outline: none; }
+a:focus { outline: red thin dotted; } */
+
+abbr[title], dfn[title] {
+  border-bottom: 1px dotted #333;
+  cursor: help;
+}
+
+/*** fonts and colors ***
+
+/* Linux- and Windows-friendly sans-serif font stack: http://mky.be/fontstack */
+body { font-family: Helmet, Freesans, sans-serif; }
+
+body { background-color: #f8f8ff; } /* ghostwhite */
+
+body, select, input, textarea {
+  color: #333;
+}
+
+h1 { font-size: larger; }
+
+a { color: #03f; }
+a:hover { color: #69f; }
+
+/*** Padding and margins ***/
+
+body {
+  padding: 10px 5%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  padding: 2ex 0;
+}
+
+p {
+  padding: .5ex 0;
+}
+
+table {
+  padding: 1ex 0;
+  border-spacing: 10px;
+}
