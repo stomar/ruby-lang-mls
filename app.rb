@@ -65,6 +65,12 @@ end
 
 class App < Sinatra::Base
 
+  helpers do
+    def escape(text)
+      Rack::Utils.escape_html(text)
+    end
+  end
+
   get '/' do
     send_file File.join(settings.public_folder, 'index.html')
   end

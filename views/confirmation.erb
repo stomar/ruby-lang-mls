@@ -15,15 +15,15 @@
 
 <table>
 <tr><td>Mailing List:&nbsp;&nbsp;</td>
-<td><%= @ml_request.list %></td></tr>
+<td><%= escape @ml_request.list %></td></tr>
 <tr><td>First Name:</td>
-<td><%= @ml_request.first_name %></td></tr>
+<td><%= escape @ml_request.first_name %></td></tr>
 <tr><td>Last Name:</td>
-<td><%= @ml_request.last_name %></td></tr>
+<td><%= escape @ml_request.last_name %></td></tr>
 <tr><td>Mail:</td>
-<td><%= @ml_request.email %></td></tr>
+<td><%= escape @ml_request.email %></td></tr>
 <tr><td>Action:</td>
-<td><%= @ml_request.action %></td></tr>
+<td><%= escape @ml_request.action %></td></tr>
 </table>
 
 </body>
