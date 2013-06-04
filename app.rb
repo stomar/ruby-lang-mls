@@ -64,7 +64,7 @@ end
 class App < Sinatra::Base
 
   get '/' do
-    "The www.ruby-lang.org mailing list service."
+    send_file File.join(settings.public_folder, 'index.html')
   end
 
   post '/submit' do
