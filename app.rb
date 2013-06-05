@@ -81,12 +81,15 @@ class App < Sinatra::Base
     if @ml_request.valid?
       begin
         Pony.mail(@ml_request.mail_options)
+        @status  =  'Confirmation'
         @message =  'Your request has been accepted. '
         @message << 'You should receive a confirmation email shortly.'
       rescue
+        @status  = 'Error'
         @message = 'Sorry, an error occurred during processing of your request.'
       end
     else
+      @status  =  'Invalid request'
       @message =  'Your request is invalid. '
       @message << 'Please make sure that you filled out all fields.'
     end
