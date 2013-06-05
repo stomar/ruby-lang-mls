@@ -14,6 +14,7 @@ PASSWORD     = ENV['SMTP_PASSWORD']
 SMTP_ADDRESS = ENV['SMTP_SERVER']
 SMTP_PORT    = ENV['SMTP_PORT'] || '587'
 NO_CONFIRM   = ENV['NO_CONFIRM'] == 'true'
+NO_LOGS      = ENV['NO_LOGS'] == 'true'
 
 
 Pony.options = {
@@ -77,6 +78,8 @@ class App < Sinatra::Base
 
   post '/submit' do
     @ml_request = MLRequest.new(params)
+    log_data    = "#{@ml_request.list}, #{@ml_request.action}"
+    time        = Time.now.strftime('[%Y-%m-%d %H:%M:%S]')
 
     if @ml_request.valid?
       begin
@@ -84,14 +87,17 @@ class App < Sinatra::Base
         @status  =  'Confirmation'
         @message =  'Your request has been accepted. '
         @message << 'You should receive a confirmation email shortly.'
+        warn "#{time} STAT  Success (#{log_data})"  unless NO_LOGS
       rescue
         @status  = 'Error'
         @message = 'Sorry, an error occurred during processing of your request.'
+        warn "#{time} STAT  Error (#{log_data})"  unless NO_LOGS
       end
     else
       @status  =  'Invalid request'
       @message =  'Your request is invalid. '
       @message << 'Please make sure that you filled out all fields.'
+      warn "#{time} STAT  Invalid (#{log_data})"  unless NO_LOGS
     end
 
     if NO_CONFIRM
