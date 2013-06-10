@@ -35,37 +35,54 @@ abbr[title], dfn[title] {
   cursor: help;
 }
 
-/*** fonts and colors ***
+/*** fonts and colors ***/
 
-/* Linux- and Windows-friendly sans-serif font stack: http://mky.be/fontstack */
-body { font-family: Helmet, Freesans, sans-serif; }
-
-body { background-color: #f8f8ff; } /* ghostwhite */
-
-body, select, input, textarea {
-  color: #333;
+body {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  background-color: white;
+  color: black;
 }
 
-h1 { font-size: larger; }
+h1 {
+  font-family: Georgia, Palatino, "Times New Roman", Times, serif;
+  font-size: 200%;
+  font-weight: normal;
+  background-color: #346090;
+  color: white;
+}
 
-a { color: #03f; }
-a:hover { color: #69f; }
+a {
+  color: #3256B6;
+}
+
+a:visited {
+  color: #7130B8;
+}
+
+a:hover, a:visited:hover {
+  color: #C61A1A;
+  text-decoration: none;
+}
 
 /*** Padding and margins ***/
 
-body {
-  padding: 10px 5%;
+#content {
+  padding: 2ex 5%;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  padding: 2ex 0;
+  padding: 2ex 5%;
 }
 
 p {
-  padding: .5ex 0;
+  padding: .5ex 0px;
+}
+
+form {
+  padding: 1ex 0px;
 }
 
 table {
-  padding: 1ex 0;
+  padding: 1ex 0px;
   border-spacing: 10px;
 }
