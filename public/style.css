@@ -23,17 +23,9 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 /*** general behavior ***/
 
-/* force a vertical scrollbar to prevent a jumpy page */
-html { overflow-y: scroll; }
-
 /* focus: outline visible for users tabbing through the page
 a { outline: none; }
 a:focus { outline: red thin dotted; } */
-
-abbr[title], dfn[title] {
-  border-bottom: 1px dotted #333;
-  cursor: help;
-}
 
 /*** fonts and colors ***/
 
