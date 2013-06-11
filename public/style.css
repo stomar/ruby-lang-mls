@@ -51,6 +51,10 @@ h1 {
   color: white;
 }
 
+footer {
+  font-size: small;
+}
+
 a {
   color: #3256B6;
 }
@@ -85,4 +89,8 @@ form {
 table {
   padding: 1ex 0px;
   border-spacing: 10px;
+}
+
+footer {
+  padding: 3ex 5%;
 }
