@@ -70,6 +70,11 @@ class App < Sinatra::Base
     def escape(text)
       Rack::Utils.escape_html(text)
     end
+
+    def log(entry)
+      return  if NO_LOGS
+      warn entry
+    end
   end
 
   get '/' do
@@ -87,17 +92,17 @@ class App < Sinatra::Base
         @status  =  'Confirmation'
         @message =  'Your request has been accepted. '
         @message << 'You should receive a confirmation email shortly.'
-        warn "#{time} STAT  Success (#{log_data})"  unless NO_LOGS
+        log "#{time} STAT  Success (#{log_data})"
       rescue
         @status  = 'Error'
         @message = 'Sorry, an error occurred during processing of your request.'
-        warn "#{time} STAT  Error (#{log_data})"  unless NO_LOGS
+        log "#{time} STAT  Error (#{log_data})"
       end
     else
       @status  =  'Invalid request'
       @message =  'Your request is invalid. '
       @message << 'Please make sure that you filled out all fields.'
-      warn "#{time} STAT  Invalid (#{log_data})"  unless NO_LOGS
+      log "#{time} STAT  Invalid (#{log_data})"
     end
 
     if NO_CONFIRM
