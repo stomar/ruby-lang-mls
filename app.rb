@@ -84,7 +84,7 @@ class App < Sinatra::Base
   post '/submit' do
     @ml_request = MLRequest.new(params)
     log_data    = "#{@ml_request.list}, #{@ml_request.action}"
-    time        = Time.now.strftime('[%Y-%m-%d %H:%M:%S]')
+    time        = Time.now.strftime('[%Y-%m-%d %H:%M:%S %z]')
 
     if @ml_request.valid?
       begin
