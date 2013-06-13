@@ -8,6 +8,8 @@
 
 require 'sinatra/base'
 require 'pony'
+require 'uri'
+require 'pg'
 
 USERNAME     = ENV['SMTP_USERNAME']
 PASSWORD     = ENV['SMTP_PASSWORD']
@@ -15,6 +17,26 @@ SMTP_ADDRESS = ENV['SMTP_SERVER']
 SMTP_PORT    = ENV['SMTP_PORT'] || '587'
 NO_CONFIRM   = ENV['NO_CONFIRM'] == 'true'
 NO_LOGS      = ENV['NO_LOGS'] == 'true'
+DATABASE_URL = ENV['DATABASE_URL']
+
+if DATABASE_URL
+  # test locally with 'postgres://localhost/rlmls'
+  db = URI.parse(DATABASE_URL)
+
+  options = {
+    :host => db.host,
+    :user => db.user,
+    :password => db.password,
+    :dbname => db.path[1..-1]
+  }.delete_if {|k, v| v.nil? || [k, v] == [:host, 'localhost'] }
+
+  begin
+    DB = PG::Connection.open(options)
+    DB.prepare('insert', 'INSERT INTO logs (entry) VALUES ($1)')
+  rescue PG::Error
+    DATABASE_URL = nil
+  end
+end
 
 
 Pony.options = {
@@ -73,7 +95,9 @@ class App < Sinatra::Base
 
     def log(entry)
       return  if NO_LOGS
+
       warn entry
+      DB.exec_prepared('insert', [entry])  if DATABASE_URL
     end
   end
 

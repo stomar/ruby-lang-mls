@@ -5,6 +5,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.23)
+    pg (0.15.1)
     polyglot (0.3.3)
     pony (1.4.1)
       mail (> 2.0)
@@ -24,5 +25,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  pg
   pony
   sinatra
