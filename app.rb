@@ -93,8 +93,13 @@ class App < Sinatra::Base
       Rack::Utils.escape_html(text)
     end
 
-    def log(entry)
+    def log(time, status, list, action, exception = nil)
       return  if NO_LOGS
+
+      entry =  "#{time.strftime('[%Y-%m-%d %H:%M:%S %z]')}"
+      entry << " STAT  " << status.ljust(7)
+      entry << " (" << (list + ',').ljust(10) << " #{action})"
+      entry << " #{exception.class}: #{exception}"  if exception
 
       warn entry
       DB.exec_prepared('insert', [entry])  if DATABASE_URL
@@ -107,8 +112,7 @@ class App < Sinatra::Base
 
   post '/submit' do
     @ml_request = MLRequest.new(params)
-    log_data    = "#{@ml_request.list}, #{@ml_request.action}"
-    time        = Time.now.strftime('[%Y-%m-%d %H:%M:%S %z]')
+    time        = Time.now
 
     if @ml_request.valid?
       begin
@@ -116,17 +120,17 @@ class App < Sinatra::Base
         @status  =  'Confirmation'
         @message =  'Your request has been accepted. '
         @message << 'You should receive a confirmation email shortly.'
-        log "#{time} STAT  Success (#{log_data})"
+        log(time, 'Success', @ml_request.list, @ml_request.action)
       rescue => e
         @status  = 'Error'
         @message = 'Sorry, an error occurred during processing of your request.'
-        log "#{time} STAT  Error   (#{log_data}) #{e.class}: #{e}"
+        log(time, 'Error', @ml_request.list, @ml_request.action, e)
       end
     else
       @status  =  'Invalid request'
       @message =  'Your request is invalid. '
       @message << 'Please make sure that you filled out all fields.'
-      log "#{time} STAT  Invalid (#{log_data})"
+      log(time, 'Invalid', @ml_request.list, @ml_request.action)
     end
 
     if NO_CONFIRM
