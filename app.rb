@@ -120,7 +120,7 @@ class App < Sinatra::Base
       rescue => e
         @status  = 'Error'
         @message = 'Sorry, an error occurred during processing of your request.'
-        log "#{time} STAT  Error (#{log_data}) #{e.class}: #{e}"
+        log "#{time} STAT  Error   (#{log_data}) #{e.class}: #{e}"
       end
     else
       @status  =  'Invalid request'
