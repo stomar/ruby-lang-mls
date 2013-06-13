@@ -117,10 +117,10 @@ class App < Sinatra::Base
         @message =  'Your request has been accepted. '
         @message << 'You should receive a confirmation email shortly.'
         log "#{time} STAT  Success (#{log_data})"
-      rescue
+      rescue => e
         @status  = 'Error'
         @message = 'Sorry, an error occurred during processing of your request.'
-        log "#{time} STAT  Error (#{log_data})"
+        log "#{time} STAT  Error (#{log_data}) #{e.class}: #{e}"
       end
     else
       @status  =  'Invalid request'
