@@ -90,6 +90,8 @@ end
 
 class App < Sinatra::Base
 
+  set :environment, :production
+
   helpers do
     def escape(text)
       Rack::Utils.escape_html(text)
