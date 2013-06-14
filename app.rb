@@ -100,9 +100,10 @@ class App < Sinatra::Base
       entry =  "#{time.strftime('[%Y-%m-%d %H:%M:%S %z]')}"
       entry << " STAT  " << status.ljust(7)
       entry << " (" << (list + ',').ljust(10) << " #{action})"
-      entry << " #{exception.class}: #{exception}"  if exception
+      entry << " #{exception.class}"  if exception
 
       warn entry
+      warn "#{exception.class}: #{exception}"  if exception
       DB.exec_prepared('insert', [entry])  if DATABASE_URL
     end
 
