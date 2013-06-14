@@ -6,8 +6,8 @@ The **ruby-lang.org mailing list service/subscriber**.
 A Sinatra application that handles mailing list subscriptions
 for the www.ruby-lang.org site.
 
-Setup
------
+Setup Application
+-----------------
 
 1. Clone repository and install dependencies:
 
@@ -35,6 +35,37 @@ Setup
 
 4. Open site at `localhost:9292`
 
+Setup Database
+--------------
+
+The application can log to a PostgreSQL database, provided the
+`DATABASE_URL` environment variable is set and the database is
+configured correctly.
+
+- On Heroku, create a PostgreSQL database and make sure `DATABASE_URL`
+  points to it.
+
+  Then create a `logs` table:
+
+  ``` sh
+  $ heroku pg:psql
+  foobar=> CREATE TABLE logs ( id SERIAL UNIQUE, entry varchar(120) );
+  ```
+
+- For local testing, create a database and a `logs` table;
+  depending on your environment e.g. with:
+
+  ``` sh
+  $ sudo -u postgres createdb rlmls
+  $ psql rlmls
+  rlmls=> CREATE TABLE logs ( id SERIAL UNIQUE, entry varchar(120) );
+  ```
+
+  Then set `DATABASE_URL` appropriately:
+
+  ``` sh
+  $ export DATABASE_URL=postgres://localhost/rlmls
+  ```
 
 License
 -------
