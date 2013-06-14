@@ -34,7 +34,8 @@ if DATABASE_URL
     DB = PG::Connection.open(options)
     DB.prepare('insert', 'INSERT INTO logs (entry) VALUES ($1)')
     DB.prepare('recent', 'SELECT entry FROM logs ORDER BY entry DESC LIMIT 40')
-  rescue PG::Error
+  rescue PG::Error => e
+    warn "#{e}"
     DATABASE_URL = nil
   end
 end
