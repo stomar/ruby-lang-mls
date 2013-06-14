@@ -33,6 +33,7 @@ if DATABASE_URL
   begin
     DB = PG::Connection.open(options)
     DB.prepare('insert', 'INSERT INTO logs (entry) VALUES ($1)')
+    DB.prepare('recent', 'SELECT entry FROM logs ORDER BY entry DESC LIMIT 40')
   rescue PG::Error
     DATABASE_URL = nil
   end
@@ -104,6 +105,15 @@ class App < Sinatra::Base
       warn entry
       DB.exec_prepared('insert', [entry])  if DATABASE_URL
     end
+
+    def get_logs
+      return "No logs available\n"  unless DATABASE_URL
+
+      rows = DB.exec_prepared('recent', [])
+      entries = rows.map {|row| row['entry'] }
+
+      entries.sort.join("\n") << "\n"
+    end
   end
 
   get '/' do
@@ -138,5 +148,10 @@ class App < Sinatra::Base
     else
       erb :confirmation
     end
+  end
+
+  get '/logs/?' do
+    content_type :txt
+    get_logs
   end
 end
