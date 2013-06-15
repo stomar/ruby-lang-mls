@@ -39,8 +39,13 @@ h1 {
   font-family: Georgia, Palatino, "Times New Roman", Times, serif;
   font-size: 200%;
   font-weight: normal;
-  background-color: #346090;
   color: white;
+  background-color: #346090;
+  background:    -moz-linear-gradient(left, #346090, #77a1d1);
+  background:     -ms-linear-gradient(left, #346090, #77a1d1);
+  background:      -o-linear-gradient(left, #346090, #77a1d1);
+  background: -webkit-linear-gradient(left, #346090, #77a1d1);
+  background: linear-gradient(to right, #346090, #77a1d1);
 }
 
 footer {
