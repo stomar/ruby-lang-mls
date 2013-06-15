@@ -66,8 +66,13 @@ class MLLogger
     end
   end
 
-  def log(time, status, list, action, exception = nil)
+  def log(time, info)
     return  if NO_LOGS
+
+    status    = info[:status]
+    list      = info[:list]
+    action    = info[:action]
+    exception = info[:exception]
 
     entry =  "#{time.strftime('[%Y-%m-%d %H:%M:%S %z]')}"
     entry << " STAT  " << status.ljust(7)
@@ -143,25 +148,28 @@ class App < Sinatra::Base
   post '/submit' do
     @ml_request = MLRequest.new(params)
     time        = Time.now
+    log_info    = { :list => @ml_request.list, :action => @ml_request.action }
 
     if @ml_request.valid?
       begin
         Pony.mail(@ml_request.mail_options)
+        log_info.merge!({ :status => 'Success' })
         @status  =  'Confirmation'
         @message =  'Your request has been accepted. '
         @message << 'You should receive a confirmation email shortly.'
-        settings.mllogger.log(time, 'Success', @ml_request.list, @ml_request.action)
       rescue => e
+        log_info.merge!({ :status => 'Error', :exception => e })
         @status  = 'Error'
         @message = 'Sorry, an error occurred during processing of your request.'
-        settings.mllogger.log(time, 'Error', @ml_request.list, @ml_request.action, e)
       end
     else
+      log_info.merge!({ :status => 'Invalid' })
       @status  =  'Invalid request'
       @message =  'Your request is invalid. '
       @message << 'Please make sure that you filled out all fields.'
-      settings.mllogger.log(time, 'Invalid', @ml_request.list, @ml_request.action)
     end
+
+    settings.mllogger.log(time, log_info)
 
     if NO_CONFIRM
       redirect back
