@@ -133,6 +133,28 @@ class App < Sinatra::Base
 
   configure do
     set :mllogger, MLLogger.new(DATABASE_URL)
+
+    messages = {
+      :success => {
+        :log    => 'Success',
+        :header => 'Confirmation',
+        :text   => 'Your request has been accepted. ' <<
+                   'You should receive a confirmation email shortly.'
+      },
+      :invalid => {
+        :log    => 'Invalid',
+        :header => 'Invalid request',
+        :text   => 'Your request is invalid. ' <<
+                   'Please make sure that you filled out all fields.'
+      },
+      :error => {
+        :log    => 'Error',
+        :header => 'Error',
+        :text   => 'Sorry, an error occurred during processing of your request.'
+      },
+    }
+
+    set :messages, messages
   end
 
   helpers do
@@ -153,23 +175,20 @@ class App < Sinatra::Base
     if @ml_request.valid?
       begin
         Pony.mail(@ml_request.mail_options)
-        log_info.merge!({ :status => 'Success' })
-        @status  =  'Confirmation'
-        @message =  'Your request has been accepted. '
-        @message << 'You should receive a confirmation email shortly.'
+        status = :success
       rescue => e
-        log_info.merge!({ :status => 'Error', :exception => e })
-        @status  = 'Error'
-        @message = 'Sorry, an error occurred during processing of your request.'
+        log_info[:exception] = e
+        status = :error
       end
     else
-      log_info.merge!({ :status => 'Invalid' })
-      @status  =  'Invalid request'
-      @message =  'Your request is invalid. '
-      @message << 'Please make sure that you filled out all fields.'
+      status = :invalid
     end
 
+    log_info[:status] = settings.messages[status][:log]
     settings.mllogger.log(time, log_info)
+
+    @header  = settings.messages[status][:header]
+    @message = settings.messages[status][:text]
 
     if NO_CONFIRM
       redirect back
