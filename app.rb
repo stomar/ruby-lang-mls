@@ -111,8 +111,8 @@ class MLRequest
   end
 
   def valid?
-    @first_name =~ /\A[a-zA-Z]+\Z/ &&
-    @last_name  =~ /\A[a-zA-Z]+\Z/ &&
+    @first_name =~ /\A[a-zA-Z. ]+\Z/ &&
+    @last_name  =~ /\A[a-zA-Z. ]+\Z/ &&
     !@email.empty? &&
     LISTS.include?(@list) && ACTIONS.include?(@action)
   end
