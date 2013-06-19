@@ -81,6 +81,11 @@ describe 'request validation' do
     last_response.body.must_match 'Invalid'
   end
 
+  it 'fails for whitespace-only first name' do
+    post "/submit?#{@request.replace(:first_name, '    ')}"
+    last_response.body.must_match 'Invalid'
+  end
+
   it 'fails for missing first name' do
     post "/submit?#{@request.without(:first_name)}"
     last_response.body.must_match 'Invalid'

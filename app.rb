@@ -111,9 +111,9 @@ class MLRequest
   end
 
   def valid?
-    !@first_name.empty? &&
-    !@last_name.empty? &&
-    !@email.empty? &&
+    !@first_name.strip.empty? &&
+    !@last_name.strip.empty? &&
+    !@email.strip.empty? &&
     LISTS.include?(@list) && ACTIONS.include?(@action)
   end
 
