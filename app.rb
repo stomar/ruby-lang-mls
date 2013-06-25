@@ -8,8 +8,8 @@
 
 require 'sinatra/base'
 require 'pony'
-require 'uri'
-require 'pg'
+require 'dm-core'
+require 'dm-migrations'
 
 USERNAME     = ENV['SMTP_USERNAME']
 PASSWORD     = ENV['SMTP_PASSWORD']
@@ -35,6 +35,16 @@ Pony.options = {
 }
 
 
+class Log
+  include DataMapper::Resource
+
+  property :id,    Serial
+  property :entry, String, :length => 120
+end
+
+DataMapper.finalize
+
+
 # Logs subscribe/unsubscribe events to stderr and database.
 #
 # Test locally with URL 'postgres://localhost/dbname'.
@@ -45,20 +55,11 @@ class MLLogger
     @db = nil
 
     if @database_url
-      db = URI.parse(@database_url)
-
-      options = {
-        :host => db.host,
-        :user => db.user,
-        :password => db.password,
-        :dbname => db.path[1..-1]
-      }.delete_if {|k, v| v.nil? || [k, v] == [:host, 'localhost'] }
-
       begin
-        @db = PG::Connection.open(options)
-        @db.prepare('insert', 'INSERT INTO logs (entry) VALUES ($1)')
-        @db.prepare('recent', 'SELECT entry FROM logs ORDER BY entry DESC LIMIT 40')
-      rescue PG::Error => e
+        DataMapper.setup(:default, @database_url)
+        DataMapper.auto_upgrade!
+        @db = true
+      rescue => e
         warn "Error initializing database: #{e}"
         warn 'Logging to stdout only'
         @db = nil
@@ -81,14 +82,14 @@ class MLLogger
 
     warn entry
     warn "#{exception.class}: #{exception}"  if exception
-    @db.exec_prepared('insert', [entry])  if @db
+    Log.create(:entry => entry)  if @db
   end
 
   def recent_entries
     return "No logs available\n"  unless @db
 
-    rows = @db.exec_prepared('recent', [])
-    entries = rows.map {|row| row['entry'] }
+    rows = Log.all(:order => [:entry.desc], :limit => 40)
+    entries = rows.map {|row| row[:entry] }
 
     entries.sort.join("\n") << "\n"
   end

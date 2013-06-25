@@ -45,20 +45,11 @@ configured correctly.
 - On Heroku, create a PostgreSQL database and make sure `DATABASE_URL`
   points to it.
 
-  Then create a `logs` table:
-
-  ``` sh
-  $ heroku pg:psql
-  foobar=> CREATE TABLE logs ( id SERIAL UNIQUE, entry varchar(120) );
-  ```
-
-- For local testing, create a database and a `logs` table;
+- For local testing, create a database
   depending on your environment e.g. with:
 
   ``` sh
   $ sudo -u postgres createdb rlmls
-  $ psql rlmls
-  rlmls=> CREATE TABLE logs ( id SERIAL UNIQUE, entry varchar(120) );
   ```
 
   Then set `DATABASE_URL` appropriately:
