@@ -157,10 +157,8 @@ class App < Sinatra::Base
     set :messages, messages
   end
 
-  helpers do
-    def escape(text)
-      Rack::Utils.escape_html(text)
-    end
+  def escape(text)
+    Rack::Utils.escape_html(text)
   end
 
   get '/' do
