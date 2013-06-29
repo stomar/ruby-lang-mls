@@ -156,6 +156,8 @@ class App < Sinatra::Base
     }
 
     set :messages, messages
+
+    set :status_codes, { :success => 200, :invalid => 400, :error => 500 }
   end
 
   def escape(text)
@@ -192,6 +194,7 @@ class App < Sinatra::Base
     if NO_CONFIRM
       redirect back
     else
+      status settings.status_codes[status]
       erb :confirmation
     end
   end
