@@ -140,7 +140,8 @@ class App < Sinatra::Base
         :log    => 'Success',
         :header => 'Confirmation',
         :text   => 'Your request has been accepted. ' <<
-                   'You should receive a confirmation email shortly.'
+                   'To complete your request, please follow the instructions ' <<
+                   'in the email you should receive shortly.'
       },
       :invalid => {
         :log    => 'Invalid',
