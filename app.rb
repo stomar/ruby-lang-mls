@@ -59,8 +59,8 @@ class MLLogger
         DataMapper.setup(:default, @database_url)
         DataMapper.auto_upgrade!
         @db = true
-      rescue => e
-        warn "Error initializing database: #{e}"
+      rescue StandardError, LoadError => e
+        warn "Error initializing database: #{e.class}: #{e}"
         warn 'Logging to stdout only'
         @db = nil
       end
