@@ -45,18 +45,8 @@ configured correctly.
 - On Heroku, create a PostgreSQL database and make sure `DATABASE_URL`
   points to it.
 
-- For local testing, create a database
-  depending on your environment e.g. with:
-
-  ``` sh
-  $ sudo -u postgres createdb rlmls
-  ```
-
-  Then set `DATABASE_URL` appropriately:
-
-  ``` sh
-  $ export DATABASE_URL=postgres://localhost/rlmls
-  ```
+- For local development and testing, the application tries to use
+  an SQLite database when the `DATABASE_URL` variable is not set.
 
 License
 -------

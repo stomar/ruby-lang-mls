@@ -133,7 +133,7 @@ class App < Sinatra::Base
   set :environment, :production
 
   configure do
-    set :mllogger, MLLogger.new(DATABASE_URL)
+    set :mllogger, MLLogger.new(DATABASE_URL || "sqlite3://#{Dir.pwd}/development.db")
 
     messages = {
       :success => {
