@@ -51,6 +51,14 @@ class MLLogger
     Log.create(:entry => entry)  if @db
   end
 
+  def entries
+    return "No logs available\n"  unless @db
+
+    entries = Log.all.map(&:entry)
+
+    entries.sort.join("\n") << "\n"
+  end
+
   def recent_entries
     return "No logs available\n"  unless @db
 
