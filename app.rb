@@ -88,8 +88,7 @@ class MLLogger
   def recent_entries
     return "No logs available\n"  unless @db
 
-    rows = Log.all(:order => [:entry.desc], :limit => 40)
-    entries = rows.map {|row| row[:entry] }
+    entries = Log.all(:order => [:entry.desc], :limit => 40).map(&:entry)
 
     entries.sort.join("\n") << "\n"
   end
