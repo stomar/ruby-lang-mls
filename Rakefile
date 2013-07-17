@@ -10,7 +10,7 @@ Rake::TestTask.new do |t|
   t.ruby_opts << '-rubygems'
   t.libs << '.'
   t.verbose = true
-  t.warning = true
+  t.warning = false
 end
 
 
