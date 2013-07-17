@@ -1,15 +1,12 @@
 require 'minitest/autorun'
 require 'minitest/spec'
 require 'rack/test'
-require 'app'
 
 include Rack::Test::Methods
 
-
-original_verbose, $VERBOSE = $VERBOSE, nil
 NO_LOGS = true
-$VERBOSE = original_verbose
 
+require 'app'
 
 def app
   App
