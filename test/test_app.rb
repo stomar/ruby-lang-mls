@@ -18,8 +18,6 @@ class SampleRequest
   def initialize
     @fields = {
       :list       => 'ruby-talk',
-      :first_name => 'John',
-      :last_name  => 'Doe',
       :email      => 'john.doe@test.org',
       :action     => 'subscribe'
     }
@@ -37,6 +35,12 @@ class SampleRequest
     self
   end
 
+  def add(field, value)
+    @fields[field] = value
+
+    self
+  end
+
   def without(field)
     @fields.delete(field)
 
@@ -49,20 +53,17 @@ describe SampleRequest do
 
   it 'returns the correct default request' do
     request = SampleRequest.new
-    request.to_s.must_equal 'action=subscribe&email=john.doe%40test.org&' <<
-                            'first_name=John&last_name=Doe&list=ruby-talk'
+    request.to_s.must_equal 'action=subscribe&email=john.doe%40test.org&list=ruby-talk'
   end
 
   it 'can return a request with a replaced field' do
-    request = SampleRequest.new.replace(:first_name, 'Jane')
-    request.to_s.must_equal 'action=subscribe&email=john.doe%40test.org&' <<
-                            'first_name=Jane&last_name=Doe&list=ruby-talk'
+    request = SampleRequest.new.replace(:action, 'unsubscribe')
+    request.to_s.must_equal 'action=unsubscribe&email=john.doe%40test.org&list=ruby-talk'
   end
 
   it 'can return a request without a specified field' do
     request = SampleRequest.new.without(:action)
-    request.to_s.must_equal 'email=john.doe%40test.org&first_name=John&' <<
-                            'last_name=Doe&list=ruby-talk'
+    request.to_s.must_equal 'email=john.doe%40test.org&list=ruby-talk'
   end
 end
 
@@ -73,28 +74,13 @@ describe 'request validation' do
     @request = SampleRequest.new
   end
 
-  it 'fails for empty first name' do
-    post "/submit?#{@request.replace(:first_name, '')}"
-    last_response.body.must_match 'Invalid'
-  end
-
-  it 'fails for whitespace-only first name' do
-    post "/submit?#{@request.replace(:first_name, '    ')}"
-    last_response.body.must_match 'Invalid'
-  end
-
-  it 'fails for missing first name' do
-    post "/submit?#{@request.without(:first_name)}"
-    last_response.body.must_match 'Invalid'
-  end
-
-  it 'fails for missing last name' do
-    post "/submit?#{@request.without(:last_name)}"
-    last_response.body.must_match 'Invalid'
-  end
-
   it 'fails for missing email' do
     post "/submit?#{@request.without(:email)}"
+    last_response.body.must_match 'Invalid'
+  end
+
+  it 'fails for whitespace-only email' do
+    post "/submit?#{@request.replace(:email, '    ')}"
     last_response.body.must_match 'Invalid'
   end
 
@@ -116,6 +102,11 @@ describe 'request validation' do
   it 'fails for missing action' do
     post "/submit?#{@request.without(:action)}"
     last_response.body.must_match 'Invalid'
+  end
+
+  it 'does not mind additional fields' do
+    post "/submit?#{@request.add(:first_name, 'John')}"
+    last_response.body.wont_match 'Invalid'
   end
 end
 

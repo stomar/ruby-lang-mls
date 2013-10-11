@@ -37,22 +37,18 @@ Pony.options = {
 
 class MLRequest
 
-  attr_reader :list, :first_name, :last_name, :email, :action
+  attr_reader :list, :email, :action
 
   ACTIONS = ['subscribe', 'unsubscribe']
   LISTS   = ['ruby-talk', 'ruby-core', 'ruby-doc', 'ruby-cvs']
 
   def initialize(params)
     @list = params[:list] || ''
-    @first_name = params[:first_name] || ''
-    @last_name = params[:last_name] || ''
     @email = params[:email] || ''
     @action = params[:action] || ''
   end
 
   def valid?
-    !@first_name.strip.empty? &&
-    !@last_name.strip.empty? &&
     !@email.strip.empty? &&
     LISTS.include?(@list) && ACTIONS.include?(@action)
   end
