@@ -35,7 +35,7 @@ body {
   color: black;
 }
 
-h1 {
+body > h1:first-child {
   font-family: Georgia, Palatino, "Times New Roman", Times, serif;
   font-size: 200%;
   font-weight: normal;
@@ -46,6 +46,10 @@ h1 {
   background:      -o-linear-gradient(left, #346090, #77a1d1);
   background: -webkit-linear-gradient(left, #346090, #77a1d1);
   background: linear-gradient(to right, #346090, #77a1d1);
+}
+
+h1, h2, h3 {
+  font-size: larger;
 }
 
 footer {
@@ -67,27 +71,48 @@ a:hover, a:visited:hover {
 
 /*** Padding and margins ***/
 
+body > h1:first-child {
+  padding: 2ex 5%;
+}
+
 #content {
   padding: 2ex 5%;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  padding: 2ex 5%;
+  padding: 2ex 0px;
 }
 
 p {
   padding: .5ex 0px;
 }
 
+footer {
+  padding: 3ex 5%;
+}
+
+/* tables */
+
+table {
+  padding: 1ex 0px;
+  border-spacing: 0px 10px;
+}
+
+td, th {
+  text-align: left;
+  padding-left: 25px;
+}
+
+td:first-child, th:first-child {
+  padding-left: 0px;
+}
+
+/* forms */
+
 form {
   padding: 1ex 0px;
 }
 
-table {
-  padding: 1ex 0px;
-  border-spacing: 10px;
-}
-
-footer {
-  padding: 3ex 5%;
-}
+input:not([type='submit']) { border: 2px solid #999; }
+input:not([type='submit']):focus { border: 2px solid #6C6; }
+/* input:not([type='submit']):invalid { border: 2px solid #F00; } */
