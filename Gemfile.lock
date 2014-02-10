@@ -28,10 +28,10 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.25.1)
     polyglot (0.3.3)
-    pony (1.6.2)
+    pony (1.8)
       mail (>= 2.0)
     rack (1.5.2)
-    rack-protection (1.5.1)
+    rack-protection (1.5.2)
       rack
     sinatra (1.4.4)
       rack (~> 1.4)
