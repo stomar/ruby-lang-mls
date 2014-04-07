@@ -41,9 +41,9 @@ class MLLogger
     action    = info[:action]
     exception = info[:exception]
 
-    entry =  "#{time.strftime('[%Y-%m-%d %H:%M:%S %z]')}"
+    entry =  time.strftime('[%Y-%m-%d %H:%M:%S %z]')
     entry << " STAT  " << status.ljust(7)
-    entry << " (" << (list + ',').ljust(10) << " #{action})"
+    entry << " (#{(list + ',').ljust(10)} #{action})"
     entry << " #{exception.class}"  if exception
 
     warn entry
