@@ -8,6 +8,7 @@ gem 'dm-migrations'
 
 group :development do
   gem 'dm-sqlite-adapter'
+  gem 'rack-test'
 end
 
 group :production do
