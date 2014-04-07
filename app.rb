@@ -14,7 +14,7 @@ require './lib/mllogger'
 
 USERNAME     = ENV['SMTP_USERNAME']
 PASSWORD     = ENV['SMTP_PASSWORD']
-SMTP_ADDRESS = ENV['SMTP_SERVER']
+SMTP_ADDRESS = ENV['SMTP_SERVER'] || ''
 SMTP_PORT    = ENV['SMTP_PORT'] || '587'
 NO_CONFIRM   ||= ENV['NO_CONFIRM'] == 'true'
 NO_LOGS      ||= ENV['NO_LOGS'] == 'true'
