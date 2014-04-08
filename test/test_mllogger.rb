@@ -18,8 +18,8 @@ describe MLLogger do
     info = { :status => 'Success', :list => 'ruby-core', :action => 'subscribe' }
 
     capture_io do
-      @mllogger.log(@time, @info)
-      @mllogger.log(time, info)
+      Time.stub(:now, @time) { @mllogger.log(@info) }
+      Time.stub(:now, time)  { @mllogger.log(info)  }
     end
 
     last = @mllogger.entries.split("\n").last
@@ -28,9 +28,9 @@ describe MLLogger do
 
   it 'can return all entries' do
     capture_io do
-      @mllogger.log(@time, @info)
-      @mllogger.log(@time, @info)
-      @mllogger.log(@time, @info)
+      @mllogger.log(@info)
+      @mllogger.log(@info)
+      @mllogger.log(@info)
     end
 
     @mllogger.entries.split("\n").size.must_equal 3

@@ -46,20 +46,20 @@ class MLLogger
     end
   end
 
-  def log(time, info)
+  def log(info)
     return  if @no_logs
 
-    utc_time = time.dup.utc
+    time = Time.now.utc
 
     status    = info[:status]
     list      = info[:list]
     action    = info[:action]
     exception = info[:exception]
 
-    warn utc_time.strftime('[%Y-%m-%d %H:%M:%S %z]') + " #{list}, #{action}, #{status}"
+    warn time.strftime('[%Y-%m-%d %H:%M:%S %z]') + " #{list}, #{action}, #{status}"
     warn "#{exception.class}: #{exception}"  if exception
     Log.create(
-      :timestamp => utc_time,
+      :timestamp => time,
       :status => status,
       :list => list,
       :action => action,

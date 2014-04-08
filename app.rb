@@ -82,7 +82,6 @@ class App < Sinatra::Base
 
   post '/submit' do
     @ml_request = MLRequest.new(params)
-    time        = Time.now
     log_info    = { :list => @ml_request.list, :action => @ml_request.action }
 
     if @ml_request.valid?
@@ -98,7 +97,7 @@ class App < Sinatra::Base
     end
 
     log_info[:status] = settings.messages[status][:log]
-    settings.mllogger.log(time, log_info)
+    settings.mllogger.log(log_info)
 
     @header  = settings.messages[status][:header]
     @message = settings.messages[status][:text]
