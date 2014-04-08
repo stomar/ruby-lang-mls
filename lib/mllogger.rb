@@ -5,8 +5,21 @@ require 'dm-migrations'
 class Log
   include DataMapper::Resource
 
-  property :id,    Serial
-  property :entry, String, :length => 120
+  property :id,        Serial
+  property :timestamp, DateTime, :required => true
+  property :list,      String, :length => 9,  :required => true
+  property :action,    String, :length => 11, :required => true
+  property :status,    String, :length => 7,  :required => true
+  property :exception, String, :length => 35
+
+  def entry
+    msg =  timestamp.strftime('[%Y-%m-%d %H:%M:%S %z]')
+    msg << " STAT  " << status.ljust(7)
+    msg << " (#{(list + ',').ljust(10)} #{action})"
+    msg << " #{exception}"  if exception
+
+    msg
+  end
 end
 
 DataMapper.finalize
@@ -41,14 +54,15 @@ class MLLogger
     action    = info[:action]
     exception = info[:exception]
 
-    entry =  time.strftime('[%Y-%m-%d %H:%M:%S %z]')
-    entry << " STAT  " << status.ljust(7)
-    entry << " (#{(list + ',').ljust(10)} #{action})"
-    entry << " #{exception.class}"  if exception
-
-    warn entry
+    warn time.strftime('[%Y-%m-%d %H:%M:%S %z]') + " #{list}, #{action}, #{status}"
     warn "#{exception.class}: #{exception}"  if exception
-    Log.create(:entry => entry)  if @db
+    Log.create(
+      :timestamp => time,
+      :status => status,
+      :list => list,
+      :action => action,
+      :exception => exception ? exception.class.to_s : nil
+    )  if @db
   end
 
   def entries
@@ -62,7 +76,7 @@ class MLLogger
   def recent_entries
     return "No logs available\n"  unless @db
 
-    entries = Log.all(:order => [:entry.desc], :limit => 40).map(&:entry)
+    entries = Log.all(:order => [:timestamp.desc], :limit => 40).map(&:entry)
 
     entries.sort.join("\n") << "\n"
   end
