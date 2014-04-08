@@ -112,6 +112,6 @@ class App < Sinatra::Base
 
   get '/logs/?' do
     content_type :txt
-    settings.mllogger.recent_entries
+    settings.mllogger.recent_entries.join("\n") << "\n"
   end
 end

@@ -20,5 +20,5 @@ task :logs do
 
   mllogger = MLLogger.new(:database_url => DATABASE_URL)
 
-  puts mllogger.entries
+  puts mllogger.entries.join("\n") << "\n"
 end

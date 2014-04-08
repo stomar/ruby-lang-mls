@@ -67,19 +67,19 @@ class MLLogger
     )  if @db
   end
 
-  def entries
-    return "No logs available\n"  unless @db
+  def entries(limit: nil)
+    return ["No logs available"]  unless @db
 
-    entries = Log.all.map(&:to_string)
+    if limit
+      entries = Log.all(:order => [:timestamp.desc], :limit => limit).to_a.reverse
+    else
+      entries = Log.all(:order => [:timestamp.asc])
+    end
 
-    entries.sort.join("\n") << "\n"
+    entries.map(&:to_string)
   end
 
   def recent_entries
-    return "No logs available\n"  unless @db
-
-    entries = Log.all(:order => [:timestamp.desc], :limit => 40).map(&:to_string)
-
-    entries.sort.join("\n") << "\n"
+    entries(limit: 40)
   end
 end

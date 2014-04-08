@@ -20,7 +20,7 @@ describe MLLogger do
       @mllogger.log(@info1)
     end
 
-    @mllogger.entries.split("\n").last.must_match /Success \(ruby-talk, test\)/
+    @mllogger.entries.last.must_match /Success \(ruby-talk, test\)/
   end
 
   it 'can return all entries in correct order' do
@@ -32,8 +32,8 @@ describe MLLogger do
         45.times { @mllogger.log(@info1) }
       end
     end
-    @mllogger.entries.split("\n").size.must_equal 46
-    @mllogger.entries.split("\n").last.must_match /2013-01-02 03:04:06/
+    @mllogger.entries.size.must_equal 46
+    @mllogger.entries.last.must_match /2013-01-02 03:04:06/
   end
 
   it 'can return recent entries in correct order' do
@@ -45,8 +45,8 @@ describe MLLogger do
         42.times { @mllogger.log(@info1) }
       end
     end
-    @mllogger.recent_entries.split("\n").size.must_equal 40
-    @mllogger.recent_entries.split("\n").last.must_match /2013-01-02 03:04:06/
+    @mllogger.recent_entries.size.must_equal 40
+    @mllogger.recent_entries.last.must_match /2013-01-02 03:04:06/
   end
 
   after do
