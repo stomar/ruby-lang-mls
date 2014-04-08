@@ -82,7 +82,7 @@ class App < Sinatra::Base
 
   post '/submit' do
     @ml_request = MLRequest.new(params)
-    time        = Time.now.utc
+    time        = Time.now
     log_info    = { :list => @ml_request.list, :action => @ml_request.action }
 
     if @ml_request.valid?
