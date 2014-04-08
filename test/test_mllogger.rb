@@ -23,7 +23,7 @@ describe MLLogger do
     end
 
     last = @mllogger.entries.split("\n").last
-    last.must_equal "[2013-02-02 03:04:05 +0000] STAT  Success (ruby-core, subscribe)"
+    last.must_equal "[2013-02-02 03:04:05 +0000] Success (ruby-core, subscribe)"
   end
 
   it 'can return all entries' do

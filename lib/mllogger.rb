@@ -12,9 +12,9 @@ class Log
   property :status,    String, :length => 7,  :required => true
   property :exception, String, :length => 35
 
-  def entry
-    msg =  timestamp.strftime('[%Y-%m-%d %H:%M:%S %z]')
-    msg << " STAT  " << status.ljust(7)
+  def to_string
+    msg =  timestamp.strftime("[%Y-%m-%d %H:%M:%S %z] ")
+    msg << status.ljust(7)
     msg << " (#{(list + ',').ljust(10)} #{action})"
     msg << " #{exception}"  if exception
 
@@ -70,7 +70,7 @@ class MLLogger
   def entries
     return "No logs available\n"  unless @db
 
-    entries = Log.all.map(&:entry)
+    entries = Log.all.map(&:to_string)
 
     entries.sort.join("\n") << "\n"
   end
@@ -78,7 +78,7 @@ class MLLogger
   def recent_entries
     return "No logs available\n"  unless @db
 
-    entries = Log.all(:order => [:timestamp.desc], :limit => 40).map(&:entry)
+    entries = Log.all(:order => [:timestamp.desc], :limit => 40).map(&:to_string)
 
     entries.sort.join("\n") << "\n"
   end
