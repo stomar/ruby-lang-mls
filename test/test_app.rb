@@ -143,6 +143,6 @@ describe 'email sending' do
     $VERBOSE = original_verbose
 
     post "/submit?#{@request}"
-    last_response.body.must_match 'Error'
+    last_response.body.must_match '<h1>Error</h1>'
   end
 end
