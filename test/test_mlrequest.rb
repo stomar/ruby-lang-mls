@@ -5,6 +5,13 @@ require 'lib/mlrequest'
 
 describe MLRequest do
 
+  it 'returns empty strings for missing or nil request parameters' do
+    @request = MLRequest.new({ :list => nil })
+    @request.list.must_equal ''
+    @request.email.must_equal ''
+    @request.action.must_equal ''
+  end
+
   it 'can validate a valid request' do
     @request = MLRequest.new({
                  :list   => 'ruby-talk',
