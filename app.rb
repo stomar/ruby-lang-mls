@@ -48,20 +48,17 @@ class App < Sinatra::Base
 
     messages = {
       :success => {
-        :log    => 'Success',
         :header => 'Confirmation',
         :text   => 'Your request has been accepted. ' <<
                    'To complete your request, please follow the instructions ' <<
                    'in the email you should receive shortly.'
       },
       :invalid => {
-        :log    => 'Invalid',
         :header => 'Invalid request',
         :text   => 'Your request is invalid. ' <<
                    'Please make sure that you filled out all fields.'
       },
       :error => {
-        :log    => 'Error',
         :header => 'Error',
         :text   => 'Sorry, an error occurred during processing of your request.'
       },
@@ -82,22 +79,20 @@ class App < Sinatra::Base
 
   post '/submit' do
     @ml_request = MLRequest.new(params)
-    log_info    = { :list => @ml_request.list, :action => @ml_request.action }
 
     if @ml_request.valid?
       begin
         Pony.mail(@ml_request.mail_options)
         status = :success
+        settings.mllogger.log(@ml_request.list, @ml_request.action)
       rescue => e
-        log_info[:exception] = e
         status = :error
+        settings.mllogger.log_error(@ml_request.list, @ml_request.action, e)
       end
     else
       status = :invalid
+      settings.mllogger.log_invalid(@ml_request.list, @ml_request.action)
     end
-
-    log_info[:status] = settings.messages[status][:log]
-    settings.mllogger.log(log_info)
 
     @header  = settings.messages[status][:header]
     @message = settings.messages[status][:text]

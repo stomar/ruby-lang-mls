@@ -46,25 +46,16 @@ class MLLogger
     end
   end
 
-  def log(info)
-    return  if @no_logs
+  def log(list, action)
+    add_to_log(list, action, "Success")
+  end
 
-    time = Time.now.utc
+  def log_invalid(list, action)
+    add_to_log(list, action, "Invalid")
+  end
 
-    status    = info[:status]
-    list      = info[:list]
-    action    = info[:action]
-    exception = info[:exception]
-
-    warn time.strftime('[%Y-%m-%d %H:%M:%S %z]') + " #{list}, #{action}, #{status}"
-    warn "#{exception.class}: #{exception}"  if exception
-    Log.create(
-      :timestamp => time,
-      :status => status,
-      :list => list,
-      :action => action,
-      :exception => exception ? exception.class.to_s : nil
-    )  if @db
+  def log_error(list, action, exception)
+    add_to_log(list, action, "Error", exception)
   end
 
   def entries(limit: nil)
@@ -81,5 +72,23 @@ class MLLogger
 
   def recent_entries
     entries(limit: 40)
+  end
+
+  private
+
+  def add_to_log(list, action, status, exception = nil)
+    return  if @no_logs
+
+    time = Time.now.utc
+
+    warn time.strftime('[%Y-%m-%d %H:%M:%S %z]') + " #{list}, #{action}, #{status}"
+    warn "#{exception.class}: #{exception}"  if exception
+    Log.create(
+      :timestamp => time,
+      :status => status,
+      :list => list,
+      :action => action,
+      :exception => exception ? exception.class.to_s : nil
+    )  if @db
   end
 end
