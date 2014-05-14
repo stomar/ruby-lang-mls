@@ -7,9 +7,9 @@
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 
 require 'sinatra/base'
-require 'pony'
 
 require './lib/mlrequest'
+require './lib/mlmailer'
 require './lib/mllogger'
 
 USERNAME     = ENV['SMTP_USERNAME']
@@ -21,26 +21,17 @@ NO_LOGS      ||= ENV['NO_LOGS'] == 'true'
 DATABASE_URL ||= ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/development.db"
 
 
-Pony.options = {
-  :subject => '',
-  :sender => USERNAME,
-  :via => :smtp,
-  :via_options => {
-    :user_name      => USERNAME,
-    :password       => PASSWORD,
-    :address        => SMTP_ADDRESS,
-    :port           => SMTP_PORT,
-    :authentication => :plain,
-    :enable_starttls_auto => true,
-  }
-}
-
-
 class App < Sinatra::Base
 
   set :environment, :production
 
   configure do
+    set :mlmailer, MLMailer.new(
+                     :username     => USERNAME,
+                     :password     => PASSWORD,
+                     :smtp_address => SMTP_ADDRESS,
+                     :smtp_port    => SMTP_PORT
+                   )
     set :mllogger, MLLogger.new(
                      :database_url => DATABASE_URL,
                      :no_logs      => NO_LOGS
@@ -82,7 +73,7 @@ class App < Sinatra::Base
 
     if @ml_request.valid?
       begin
-        Pony.mail(@ml_request.mail_options)
+        settings.mlmailer.mail(@ml_request.mail_options)
         status = :success
         settings.mllogger.log(@ml_request.list, @ml_request.action)
       rescue => e
