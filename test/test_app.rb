@@ -68,6 +68,14 @@ describe SampleRequest do
 end
 
 
+describe 'application environment' do
+
+  it 'uses UTC as local time zone' do
+    Time.now.strftime('%z').must_equal '+0000'
+  end
+end
+
+
 describe 'request validation' do
 
   before do

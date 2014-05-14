@@ -1,5 +1,7 @@
 require 'rake/testtask'
 
+ENV["TZ"] = "UTC"
+
 USERNAME     = ENV['SMTP_USERNAME']
 PASSWORD     = ENV['SMTP_PASSWORD']
 SMTP_ADDRESS = ENV['SMTP_SERVER'] || ''

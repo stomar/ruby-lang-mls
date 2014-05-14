@@ -12,6 +12,8 @@ require './lib/mlrequest'
 require './lib/mlmailer'
 require './lib/mllogger'
 
+ENV["TZ"] = "UTC"
+
 USERNAME     = ENV['SMTP_USERNAME']
 PASSWORD     = ENV['SMTP_PASSWORD']
 SMTP_ADDRESS = ENV['SMTP_SERVER'] || ''
