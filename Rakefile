@@ -33,6 +33,24 @@ task :logs do
 end
 
 
+desc "Cleanup logs and migrate entries to daily stats"
+task :cleanup_logs do
+  require "./lib/mllogcleaner"
+
+  mllogcleaner = MLLogCleaner.new(:database_url => DATABASE_URL)
+  mllogcleaner.migrate_all
+end
+
+
+desc "List all daily stats entries"
+task :stats do
+  require "./lib/mldailystats"
+
+  mldailystats = MLDailyStats.new(:database_url => DATABASE_URL)
+  puts mldailystats.entries.join("\n") << "\n"
+end
+
+
 desc 'List email service stats'
 task :mailer_stats do
   require './lib/mlmailerstats'
