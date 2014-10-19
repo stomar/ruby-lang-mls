@@ -1,5 +1,4 @@
 require 'minitest/autorun'
-require 'minitest/spec'
 require 'rack/test'
 
 include Rack::Test::Methods
