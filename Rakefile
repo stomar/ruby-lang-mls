@@ -32,6 +32,15 @@ task :logs do
 end
 
 
+desc "List log entries for failed requests"
+task :errors do
+  require "./lib/mllogger"
+
+  mllogger = MLLogger.new(:database_url => DATABASE_URL)
+  puts mllogger.errors.join("\n") << "\n"
+end
+
+
 desc "Cleanup logs and migrate entries to daily stats"
 task :cleanup_logs do
   require "./lib/mllogcleaner"

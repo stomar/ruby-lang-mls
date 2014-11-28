@@ -74,6 +74,18 @@ class MLLogger
     entries(limit: 40)
   end
 
+  def errors(limit: nil)
+    return ["No logs available"]  unless @db
+
+    if limit
+      entries = Log.all(:status.not => "Success", :order => [:timestamp.desc], :limit => limit).to_a.reverse
+    else
+      entries = Log.all(:status.not => "Success", :order => [:timestamp.asc])
+    end
+
+    entries.map(&:to_string)
+  end
+
   private
 
   def add_to_log(list, action, status, exception = nil)
