@@ -2,6 +2,7 @@ source "https://rubygems.org"
 ruby '2.2.3'
 gem 'sinatra'
 gem 'pony'
+gem 'rack-ssl'
 gem 'thin'
 gem 'dm-core'
 gem 'dm-migrations'
