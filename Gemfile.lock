@@ -26,6 +26,7 @@ GEM
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     mime-types (2.6.2)
+    minitest (5.8.3)
     pony (1.11)
       mail (>= 2.0)
     rack (1.6.4)
@@ -51,6 +52,7 @@ DEPENDENCIES
   dm-migrations
   dm-postgres-adapter
   dm-sqlite-adapter
+  minitest
   pony
   rack-test
   sinatra
