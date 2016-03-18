@@ -13,7 +13,7 @@ class MLMailer
 
     Pony.options = {
       :subject => '',
-      :sender => @sender_email,
+      :from => @sender_email,
       :via => :smtp,
       :via_options => {
         :user_name      => @smtp_user,

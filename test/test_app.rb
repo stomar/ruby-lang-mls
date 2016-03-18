@@ -127,8 +127,7 @@ describe 'email sending' do
   it 'sends an email for a vaild request' do
     expected = {
           :to   => 'ruby-talk-request@ruby-lang.org',
-          :from => 'john.doe@test.org',
-          :body => 'subscribe'
+          :body => 'subscribe address=john.doe@test.org'
     }
 
     original_verbose, $VERBOSE = $VERBOSE, nil

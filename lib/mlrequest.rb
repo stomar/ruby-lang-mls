@@ -18,8 +18,7 @@ class MLRequest
   def mail_options
     {
       :to   => "#{list}-request@ruby-lang.org",
-      :from => email,
-      :body => action
+      :body => "#{action} address=#{email}"
     }
   end
 end
