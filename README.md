@@ -20,7 +20,8 @@ Setup Application
 2. Setup environment variables, e.g. with:
 
    ``` sh
-   export SMTP_USERNAME=john.doe@mymail.org
+   export SENDER_EMAIL=john.doe@mymail.org
+   export SMTP_USER=username
    export SMTP_PASSWORD=password
    export SMTP_SERVER=smtp.mymail.org
    ```

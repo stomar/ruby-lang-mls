@@ -2,8 +2,9 @@ require "rake/testtask"
 
 ENV["TZ"] = "UTC"
 
-USERNAME     = ENV["SMTP_USERNAME"]
-PASSWORD     = ENV["SMTP_PASSWORD"]
+SENDER_EMAIL = ENV["SENDER_EMAIL"]
+SMTP_USER    = ENV["SMTP_USER"]
+SMTP_PASSWORD = ENV["SMTP_PASSWORD"]
 SMTP_ADDRESS = ENV["SMTP_SERVER"] || ""
 SMTP_PORT    = ENV["SMTP_PORT"] || "587"
 DATABASE_URL = ENV["DATABASE_URL"] || "sqlite3://#{Dir.pwd}/development.db"
@@ -77,8 +78,9 @@ task :mailer_test do
 
   if ADMIN_EMAIL
     mailer = MLMailer.new(
-               :username     => USERNAME,
-               :password     => PASSWORD,
+               :sender_email => SENDER_EMAIL,
+               :smtp_user    => SMTP_USER,
+               :smtp_password => SMTP_PASSWORD,
                :smtp_address => SMTP_ADDRESS,
                :smtp_port    => SMTP_PORT
              )

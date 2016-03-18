@@ -14,8 +14,9 @@ require './lib/mllogger'
 
 ENV["TZ"] = "UTC"
 
-USERNAME     = ENV['SMTP_USERNAME']
-PASSWORD     = ENV['SMTP_PASSWORD']
+SENDER_EMAIL = ENV['SENDER_EMAIL']
+SMTP_USER    = ENV['SMTP_USER']
+SMTP_PASSWORD = ENV['SMTP_PASSWORD']
 SMTP_ADDRESS = ENV['SMTP_SERVER'] || ''
 SMTP_PORT    = ENV['SMTP_PORT'] || '587'
 NO_CONFIRM   ||= ENV['NO_CONFIRM'] == 'true'
@@ -29,8 +30,9 @@ class App < Sinatra::Base
 
   configure do
     set :mlmailer, MLMailer.new(
-                     :username     => USERNAME,
-                     :password     => PASSWORD,
+                     :sender_email => SENDER_EMAIL,
+                     :smtp_user    => SMTP_USER,
+                     :smtp_password => SMTP_PASSWORD,
                      :smtp_address => SMTP_ADDRESS,
                      :smtp_port    => SMTP_PORT
                    )
