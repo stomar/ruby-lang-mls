@@ -6,7 +6,7 @@ require_relative "mldailystats"
 # Migrates log entries to daily stats table.
 class MLLogCleaner
 
-  DAYS_TO_KEEP = 90
+  DAYS_TO_KEEP = 30
 
   def initialize(options)
     @database_url = options[:database_url]
