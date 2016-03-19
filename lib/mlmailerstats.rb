@@ -13,12 +13,8 @@ class MLMailerStats
   def get
     stats = extract_stats
 
-    info = "Sent emails\n"
-    info << "last 24 hours: %4d\n" % stats[:today]
-    info << "last  7 days:  %4d\n" % stats[:last_7_days]
-    info << "last 30 days:  %4d\n" % stats[:last_30_days]
-    info << "\n"
-    info << "backlog:       %4d\n" % stats[:backlog]
+    info = "Sent emails "
+    info << "today: %3d\n" % stats[:today]
 
     info
   end
@@ -26,25 +22,22 @@ class MLMailerStats
   private
 
   def extract_stats
-    data = get_user_info
+    data = get_data
 
     stats = {}
-    stats[:backlog] = data["backlog"]
 
-    data_stats = data["stats"]
+    data_stats = data["Data"].first
     if data_stats
-      stats[:today]        = data_stats["today"]["sent"]
-      stats[:last_7_days]  = data_stats["last_7_days"]["sent"]
-      stats[:last_30_days] = data_stats["last_30_days"]["sent"]
+      stats[:today]        = data_stats["DeliveredCount"]
     end
 
     stats
   end
 
-  def get_user_info
-    uri = URI.parse(@api_url + "users/info.json")
-    request = Net::HTTP::Post.new(uri)
-    request.body = {"key" => @api_key}.to_json
+  def get_data
+    uri = URI.parse(@api_url)
+    request = Net::HTTP::Get.new(uri)
+    request.basic_auth(*@api_key.split(":"))
 
     res = Net::HTTP.start(uri.host, uri.port, :use_ssl => true) do |http|
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
