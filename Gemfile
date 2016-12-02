@@ -1,5 +1,5 @@
 source "https://rubygems.org"
-ruby '2.3.0'
+ruby '2.3.3'
 gem 'sinatra'
 gem 'pony'
 gem 'rack-ssl'
