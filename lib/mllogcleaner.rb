@@ -40,20 +40,21 @@ class MLLogCleaner
 
   private
 
-  def migrate_log_entry_to_daily_stats(log_entry)
-    date = log_entry.timestamp.to_date
-    column = extract_column_name_as_sym(log_entry)
+  def migrate_log_entry_to_daily_stats(entry)
+    timestamp = entry.timestamp
+    list = entry.list
+    action = entry.action
 
+    date = timestamp.to_date
+    column = column_as_sym(list, action)
     stats_entry = DailyStats.first_or_create(:date => date)
     increment_stats_column(stats_entry, column)
 
-    log_entry.destroy
+    entry.destroy
   end
 
-  def extract_column_name_as_sym(log_entry)
-    column_name = log_entry.list.gsub("ruby-","") + "_" + log_entry.action[0..4]
-
-    column_name.to_sym
+  def column_as_sym(list, action)
+    "#{list.gsub(/ruby-/,"")}_#{action[0..4]}".to_sym
   end
 
   def increment_stats_column(stats_entry, column)
