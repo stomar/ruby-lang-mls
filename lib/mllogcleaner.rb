@@ -1,12 +1,9 @@
-require "date"
 require_relative "mllogger"
 require_relative "mldailystats"
 
 
 # Migrates log entries to daily stats table.
 class MLLogCleaner
-
-  DAYS_TO_KEEP = 30
 
   def initialize(options)
     @database_url = options[:database_url]
@@ -32,7 +29,7 @@ class MLLogCleaner
       return
     end
 
-    entries = Log.all(:status => "Success", :timestamp.lt => Date.today - DAYS_TO_KEEP)
+    entries = Log.all(:status => "Success")
 
     entries.each do |entry|
       puts "Migrating entry #{entry.id} (#{entry.timestamp})"
