@@ -36,18 +36,9 @@ class MLLogCleaner
 
     entries.each do |entry|
       puts "Migrating entry #{entry.id} (#{entry.timestamp})"
-      migrate_log_entry_to_daily_stats(entry)
+
+      @stats.increment(entry.list, entry.action, timestamp: entry.timestamp)
+      entry.destroy
     end
-  end
-
-  private
-
-  def migrate_log_entry_to_daily_stats(entry)
-    timestamp = entry.timestamp
-    list = entry.list
-    action = entry.action
-
-    @stats.increment(list, action, timestamp: timestamp)
-    entry.destroy
   end
 end
