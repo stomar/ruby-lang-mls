@@ -45,12 +45,15 @@ class MLLogCleaner
     list = entry.list
     action = entry.action
 
+    increment_stats(list, action, timestamp: timestamp)
+    entry.destroy
+  end
+
+  def increment_stats(list, action, timestamp: Time.now.utc)
     date = timestamp.to_date
     column = column_as_sym(list, action)
     stats_entry = DailyStats.first_or_create(:date => date)
     increment_stats_column(stats_entry, column)
-
-    entry.destroy
   end
 
   def column_as_sym(list, action)
