@@ -22,6 +22,8 @@ class MLLogCleaner
         @db = nil
       end
     end
+
+    @stats = MLDailyStats.new(:database_url => @database_url)
   end
 
   def migrate_all
@@ -45,23 +47,7 @@ class MLLogCleaner
     list = entry.list
     action = entry.action
 
-    increment_stats(list, action, timestamp: timestamp)
+    @stats.increment(list, action, timestamp: timestamp)
     entry.destroy
-  end
-
-  def increment_stats(list, action, timestamp: Time.now.utc)
-    date = timestamp.to_date
-    column = column_as_sym(list, action)
-    stats_entry = DailyStats.first_or_create(:date => date)
-    increment_stats_column(stats_entry, column)
-  end
-
-  def column_as_sym(list, action)
-    "#{list.gsub(/ruby-/,"")}_#{action[0..4]}".to_sym
-  end
-
-  def increment_stats_column(stats_entry, column)
-    new_value = stats_entry[column] + 1
-    stats_entry.update(column => new_value)
   end
 end
