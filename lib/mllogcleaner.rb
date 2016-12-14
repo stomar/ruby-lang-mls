@@ -25,7 +25,10 @@ class MLLogCleaner
   end
 
   def migrate_all
-    return ["Database not available"]  unless @db
+    unless @db
+      warn "Database not available"
+      return
+    end
 
     entries = Log.all(:status => "Success", :timestamp.lt => Date.today - DAYS_TO_KEEP)
 
