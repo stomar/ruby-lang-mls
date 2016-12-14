@@ -1,8 +1,7 @@
 require_relative "mllogger"
-require_relative "mldailystats"
 
 
-# Migrates log entries to daily stats table.
+# Removes log entries for successful requests.
 class MLLogCleaner
 
   def initialize(options)
@@ -19,11 +18,9 @@ class MLLogCleaner
         @db = nil
       end
     end
-
-    @stats = MLDailyStats.new(:database_url => @database_url)
   end
 
-  def migrate_all
+  def cleanup_all
     unless @db
       warn "Database not available"
       return
@@ -32,9 +29,7 @@ class MLLogCleaner
     entries = Log.all(:status => "Success")
 
     entries.each do |entry|
-      puts "Migrating entry #{entry.id} (#{entry.timestamp})"
-
-      @stats.increment(entry.list, entry.action, timestamp: entry.timestamp)
+      puts "Removing entry #{entry.id} (#{entry.timestamp})"
       entry.destroy
     end
   end

@@ -42,12 +42,12 @@ task :errors do
 end
 
 
-desc "Cleanup logs and migrate entries to daily stats"
+desc "Cleanup logs"
 task :cleanup_logs do
   require "./lib/mllogcleaner"
 
   mllogcleaner = MLLogCleaner.new(:database_url => DATABASE_URL)
-  mllogcleaner.migrate_all
+  mllogcleaner.cleanup_all
 end
 
 
