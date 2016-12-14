@@ -11,6 +11,7 @@ require 'sinatra/base'
 require './lib/mlrequest'
 require './lib/mlmailer'
 require './lib/mllogger'
+require './lib/mldailystats'
 
 ENV["TZ"] = "UTC"
 
@@ -40,6 +41,9 @@ class App < Sinatra::Base
                      :database_url => DATABASE_URL,
                      :no_logs      => NO_LOGS
                    )
+    set :mlstats, MLDailyStats.new(
+                    :database_url => DATABASE_URL
+                  )
 
     messages = {
       :success => {
@@ -80,6 +84,7 @@ class App < Sinatra::Base
         settings.mlmailer.mail(@ml_request.mail_options)
         status = :success
         settings.mllogger.log(@ml_request.list, @ml_request.action)
+        settings.mlstats.increment(@ml_request.list, @ml_request.action)
       rescue => e
         status = :error
         settings.mllogger.log_error(@ml_request.list, @ml_request.action, e)
