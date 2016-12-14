@@ -26,6 +26,19 @@ class DailyStats
     [date, talk_subsc, talk_unsub, core_subsc, core_unsub,
      doc_subsc, doc_unsub, cvs_subsc, cvs_unsub].map(&:to_s).join(",")
   end
+
+  def increment(list, action)
+    column = column_from_list_action(list, action)
+
+    new_value = self[column] + 1
+    self.update(column => new_value)
+  end
+
+  private
+
+  def column_from_list_action(list, action)
+    "#{list.gsub(/ruby-/,"")}_#{action[0..4]}".to_sym
+  end
 end
 
 DataMapper.finalize
@@ -57,10 +70,9 @@ class MLDailyStats
     end
 
     date = timestamp.to_date
-    column = column_as_sym(list, action)
 
     entry = DailyStats.first_or_create(:date => date)
-    increment_stats_column(entry, column)
+    entry.increment(list, action)
   end
 
   def entries(limit: nil)
@@ -73,16 +85,5 @@ class MLDailyStats
     end
 
     [DailyStats.headers] + entries.map(&:to_string)
-  end
-
-  private
-
-  def column_as_sym(list, action)
-    "#{list.gsub(/ruby-/,"")}_#{action[0..4]}".to_sym
-  end
-
-  def increment_stats_column(entry, column)
-    new_value = entry[column] + 1
-    entry.update(column => new_value)
   end
 end
