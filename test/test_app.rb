@@ -118,8 +118,12 @@ describe 'request validation' do
   end
 
   it 'does not mind additional fields' do
+    original_verbose, $VERBOSE = $VERBOSE, nil
+    def Pony.mail(options); end
+    $VERBOSE = original_verbose
+
     post "/submit?#{@request.add(:first_name, 'John')}"
-    last_response.body.wont_match 'Invalid'
+    last_response.body.must_match '<h1>Confirmation</h1>'
   end
 end
 
