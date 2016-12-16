@@ -159,7 +159,7 @@ describe 'email sending' do
   it 'indicates an error for failed send process' do
     original_verbose, $VERBOSE = $VERBOSE, nil
     def Pony.mail(options)
-      raise 'exception'
+      raise 'fake exception'
     end
     $VERBOSE = original_verbose
 
