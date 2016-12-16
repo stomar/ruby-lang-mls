@@ -1,4 +1,5 @@
-require 'minitest/autorun'
+require_relative 'helper'
+
 require 'rack/test'
 
 include Rack::Test::Methods
@@ -78,7 +79,12 @@ end
 describe 'request validation' do
 
   before do
+    setup_database
     @request = SampleRequest.new
+  end
+
+  after do
+    teardown_database
   end
 
   it 'fails for missing email' do
@@ -121,7 +127,12 @@ end
 describe 'email sending' do
 
   before do
+    setup_database
     @request = SampleRequest.new
+  end
+
+  after do
+    teardown_database
   end
 
   it 'sends an email for a vaild request' do

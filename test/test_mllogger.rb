@@ -1,17 +1,21 @@
-require 'minitest/autorun'
+require_relative 'helper'
 require 'lib/mllogger'
 
 
 describe MLLogger do
 
   before do
-    @db_file = File.expand_path(File.dirname(__FILE__) + '/test.db')
-    @mllogger = MLLogger.new(:database_url => "sqlite3://#{@db_file}")
+    setup_database
+    @mllogger = MLLogger.new(:database_url => ENV["DATABASE_URL"])
 
     @time1 = Time.utc(2013, 1, 2, 3, 4, 5)
     @time2 = Time.utc(2013, 1, 2, 3, 4, 6)
     @list1, @action1 = 'ruby-talk', 'test'
     @list2, @action2 = 'ruby-core', 'subscribe'
+  end
+
+  after do
+    teardown_database
   end
 
   it 'can log an entry (success)' do
@@ -62,10 +66,5 @@ describe MLLogger do
     end
     @mllogger.recent_entries.size.must_equal 40
     @mllogger.recent_entries.last.must_match /2013-01-02 03:04:06/
-  end
-
-  after do
-    DataObjects::Pooling.pools.each {|pool| pool.dispose }  # close connection
-    File.delete(@db_file)  if File.exist?(@db_file)
   end
 end
