@@ -118,9 +118,9 @@ describe 'request validation' do
   end
 
   it 'does not mind additional fields' do
-    original_verbose, $VERBOSE = $VERBOSE, nil
-    def Pony.mail(options); end
-    $VERBOSE = original_verbose
+    silence_warnings do
+      def Pony.mail(options); end
+    end
 
     post "/submit?#{@request.add(:first_name, 'John')}"
     last_response.body.must_match '<h1>Confirmation</h1>'
@@ -145,9 +145,9 @@ describe 'email sending' do
           :body => 'subscribe address=john.doe@test.org'
     }
 
-    original_verbose, $VERBOSE = $VERBOSE, nil
-    Pony = MiniTest::Mock.new
-    $VERBOSE = original_verbose
+    silence_warnings do
+      Pony = MiniTest::Mock.new
+    end
 
     Pony.expect(:mail, nil, [expected])
 
@@ -157,11 +157,11 @@ describe 'email sending' do
   end
 
   it 'indicates an error for failed send process' do
-    original_verbose, $VERBOSE = $VERBOSE, nil
-    def Pony.mail(options)
-      raise 'fake exception'
+    silence_warnings do
+      def Pony.mail(options)
+        raise 'fake exception'
+      end
     end
-    $VERBOSE = original_verbose
 
     post "/submit?#{@request}"
     last_response.body.must_match '<h1>Error</h1>'

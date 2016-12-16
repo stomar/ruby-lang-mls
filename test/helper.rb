@@ -15,3 +15,11 @@ def teardown_database
   DataObjects::Pooling.pools.each {|pool| pool.dispose }  # close connection
   File.delete(DB_FILE)  if File.exist?(DB_FILE)
 end
+
+
+def silence_warnings
+  original_verbose, $VERBOSE = $VERBOSE, nil
+  yield
+ensure
+  $VERBOSE = original_verbose
+end
