@@ -60,11 +60,15 @@ namespace :mailer do
   task :stats do
     require_relative "lib/mlmailerstats"
 
-    stats = MLMailerStats.new(
-              :api_url => MAILER_API_URL,
-              :api_key => MAILER_API_KEY
-            )
-    puts stats.get
+    if MAILER_API_URL && MAILER_API_KEY
+      stats = MLMailerStats.new(
+                :api_url => MAILER_API_URL,
+                :api_key => MAILER_API_KEY
+              )
+      puts stats.get
+    else
+      warn "MAILER_API_URL or MAILER_API_KEY not defined"
+    end
   end
 
   desc "Test email delivery"
