@@ -4,10 +4,6 @@ require 'rack/test'
 
 include Rack::Test::Methods
 
-ENV["NO_LOGS"] = "true"
-
-require 'app'
-
 def app
   App
 end

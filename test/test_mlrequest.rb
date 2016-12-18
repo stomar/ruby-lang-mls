@@ -1,5 +1,4 @@
 require_relative 'helper'
-require 'lib/mlrequest'
 
 
 describe MLRequest do

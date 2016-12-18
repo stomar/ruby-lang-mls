@@ -1,12 +1,11 @@
 require_relative 'helper'
-require 'lib/mllogger'
 
 
 describe MLLogger do
 
   before do
     setup_database
-    @mllogger = MLLogger.new(:database_url => ENV["DATABASE_URL"])
+    @mllogger = MLLogger.new
 
     @time1 = Time.utc(2013, 1, 2, 3, 4, 5)
     @time2 = Time.utc(2013, 1, 2, 3, 4, 6)

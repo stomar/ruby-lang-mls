@@ -25,6 +25,16 @@ NO_LOGS      = ENV['NO_LOGS'] == 'true'
 DATABASE_URL = ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/development.db"
 
 
+begin
+  DataMapper.setup(:default, DATABASE_URL)
+  DataMapper.auto_upgrade!
+  DB = true
+rescue StandardError, LoadError => e
+  warn "Error initializing database: #{e.class}: #{e}"
+  DB = false
+end
+
+
 class App < Sinatra::Base
 
   set :environment, :production
@@ -37,13 +47,8 @@ class App < Sinatra::Base
                      :smtp_address => SMTP_ADDRESS,
                      :smtp_port    => SMTP_PORT
                    )
-    set :mllogger, MLLogger.new(
-                     :database_url => DATABASE_URL,
-                     :no_logs      => NO_LOGS
-                   )
-    set :mlstats, MLDailyStats.new(
-                    :database_url => DATABASE_URL
-                  )
+    set :mllogger, MLLogger.new(:no_logs => NO_LOGS)
+    set :mlstats,  MLDailyStats.new
 
     messages = {
       :success => {

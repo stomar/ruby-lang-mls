@@ -28,7 +28,7 @@ desc "List all log entries"
 task :logs do
   require "./lib/mllogger"
 
-  mllogger = MLLogger.new(:database_url => DATABASE_URL)
+  mllogger = MLLogger.new
   puts mllogger.entries.join("\n") << "\n"
 end
 
@@ -38,7 +38,7 @@ namespace :logs do
   task :errors do
     require "./lib/mllogger"
 
-    mllogger = MLLogger.new(:database_url => DATABASE_URL)
+    mllogger = MLLogger.new
     puts mllogger.errors.join("\n") << "\n"
   end
 
@@ -46,7 +46,7 @@ namespace :logs do
   task :cleanup do
     require "./lib/mllogcleaner"
 
-    mllogcleaner = MLLogCleaner.new(:database_url => DATABASE_URL)
+    mllogcleaner = MLLogCleaner.new
     mllogcleaner.cleanup_all
   end
 end
@@ -56,7 +56,7 @@ desc "List all daily stats entries"
 task :stats do
   require "./lib/mldailystats"
 
-  mldailystats = MLDailyStats.new(:database_url => DATABASE_URL)
+  mldailystats = MLDailyStats.new
   puts mldailystats.entries.join("\n") << "\n"
 end
 

@@ -28,22 +28,11 @@ DataMapper.finalize
 # Logs subscribe/unsubscribe events to stderr and database.
 class MLLogger
 
-  def initialize(options)
-    @database_url = options[:database_url]
-    @no_logs      = options.fetch(:no_logs, false)
-    @db = nil
+  def initialize(options = {})
+    @no_logs = options.fetch(:no_logs, false)
+    @db = DB
 
-    if @database_url
-      begin
-        DataMapper.setup(:default, @database_url)
-        DataMapper.auto_upgrade!
-        @db = true
-      rescue StandardError, LoadError => e
-        warn "Error initializing database: #{e.class}: #{e}"
-        warn 'Logging to stdout only'
-        @db = nil
-      end
-    end
+    warn 'Logging to stdout only'  unless @db
   end
 
   def log(list, action)

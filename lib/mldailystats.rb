@@ -47,20 +47,8 @@ DataMapper.finalize
 # Returns daily stats entries.
 class MLDailyStats
 
-  def initialize(options)
-    @database_url = options[:database_url]
-    @db = nil
-
-    if @database_url
-      begin
-        DataMapper.setup(:default, @database_url)
-        DataMapper.auto_upgrade!
-        @db = true
-      rescue StandardError, LoadError => e
-        warn "Error initializing database: #{e.class}: #{e}"
-        @db = nil
-      end
-    end
+  def initialize
+    @db = DB
   end
 
   def increment(list, action, timestamp: Time.now.utc)
