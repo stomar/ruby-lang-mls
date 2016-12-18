@@ -1,13 +1,5 @@
 require "rake/testtask"
 
-ENV["TZ"] = "UTC"
-
-SENDER_EMAIL = ENV["SENDER_EMAIL"]
-SMTP_USER    = ENV["SMTP_USER"]
-SMTP_PASSWORD = ENV["SMTP_PASSWORD"]
-SMTP_ADDRESS = ENV["SMTP_SERVER"] || ""
-SMTP_PORT    = ENV["SMTP_PORT"] || "587"
-DATABASE_URL = ENV["DATABASE_URL"] || "sqlite3://#{Dir.pwd}/development.db"
 MAILER_API_URL = ENV["MAILER_API_URL"]
 MAILER_API_KEY = ENV["MAILER_API_KEY"]
 ADMIN_EMAIL  = ENV["ADMIN_EMAIL"]
@@ -26,7 +18,7 @@ end
 
 desc "List all log entries"
 task :logs do
-  require "./lib/mllogger"
+  require_relative "app"
 
   mllogger = MLLogger.new
   puts mllogger.entries.join("\n") << "\n"
@@ -36,7 +28,7 @@ namespace :logs do
 
   desc "List log entries for failed requests"
   task :errors do
-    require "./lib/mllogger"
+    require_relative "app"
 
     mllogger = MLLogger.new
     puts mllogger.errors.join("\n") << "\n"
@@ -44,7 +36,8 @@ namespace :logs do
 
   desc "Cleanup logs"
   task :cleanup do
-    require "./lib/mllogcleaner"
+    require_relative "app"
+    require_relative "lib/mllogcleaner"
 
     mllogcleaner = MLLogCleaner.new
     mllogcleaner.cleanup_all
@@ -54,7 +47,7 @@ end
 
 desc "List all daily stats entries"
 task :stats do
-  require "./lib/mldailystats"
+  require_relative "app"
 
   mldailystats = MLDailyStats.new
   puts mldailystats.entries.join("\n") << "\n"
@@ -65,7 +58,7 @@ namespace :mailer do
 
   desc "List email service stats"
   task :stats do
-    require "./lib/mlmailerstats"
+    require_relative "lib/mlmailerstats"
 
     stats = MLMailerStats.new(
               :api_url => MAILER_API_URL,
@@ -76,7 +69,7 @@ namespace :mailer do
 
   desc "Test email delivery"
   task :test do
-    require "./lib/mlmailer"
+    require_relative "app"
 
     if ADMIN_EMAIL
       mailer = MLMailer.new(
