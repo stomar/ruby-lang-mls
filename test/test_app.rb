@@ -4,7 +4,7 @@ require 'rack/test'
 
 include Rack::Test::Methods
 
-NO_LOGS = true
+ENV["NO_LOGS"] = "true"
 
 require 'app'
 
