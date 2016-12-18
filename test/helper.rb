@@ -2,7 +2,6 @@ require "minitest/autorun"
 
 DB_FILE = File.expand_path(File.dirname(__FILE__) + '/test.db')
 ENV["DATABASE_URL"] = "sqlite:///#{DB_FILE}"
-ENV["NO_LOGS"] = "true"
 
 require_relative "../app"
 

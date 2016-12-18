@@ -84,32 +84,44 @@ describe 'request validation' do
   end
 
   it 'fails for missing email' do
-    post "/submit?#{@request.without(:email)}"
+    capture_io do
+      post "/submit?#{@request.without(:email)}"
+    end
     last_response.body.must_match 'Invalid'
   end
 
   it 'fails for whitespace-only email' do
-    post "/submit?#{@request.replace(:email, '    ')}"
+    capture_io do
+      post "/submit?#{@request.replace(:email, '    ')}"
+    end
     last_response.body.must_match 'Invalid'
   end
 
   it 'fails for nonexistent mailing list' do
-    post "/submit?#{@request.replace(:list, 'ruby-test')}"
+    capture_io do
+      post "/submit?#{@request.replace(:list, 'ruby-test')}"
+    end
     last_response.body.must_match 'Invalid'
   end
 
   it 'fails for missing mailing list' do
-    post "/submit?#{@request.without(:list)}"
+    capture_io do
+      post "/submit?#{@request.without(:list)}"
+    end
     last_response.body.must_match 'Invalid'
   end
 
   it 'fails for invalid action' do
-    post "/submit?#{@request.replace(:action, 'login')}"
+    capture_io do
+      post "/submit?#{@request.replace(:action, 'login')}"
+    end
     last_response.body.must_match 'Invalid'
   end
 
   it 'fails for missing action' do
-    post "/submit?#{@request.without(:action)}"
+    capture_io do
+      post "/submit?#{@request.without(:action)}"
+    end
     last_response.body.must_match 'Invalid'
   end
 
@@ -118,7 +130,9 @@ describe 'request validation' do
       def Pony.mail(options); end
     end
 
-    post "/submit?#{@request.add(:first_name, 'John')}"
+    capture_io do
+      post "/submit?#{@request.add(:first_name, 'John')}"
+    end
     last_response.body.must_match '<h1>Confirmation</h1>'
   end
 end
@@ -147,7 +161,9 @@ describe 'email sending' do
 
     Pony.expect(:mail, nil, [expected])
 
-    post "/submit?#{@request}"
+    capture_io do
+      post "/submit?#{@request}"
+    end
     Pony.verify
     last_response.body.must_match '<h1>Confirmation</h1>'
   end
@@ -159,7 +175,9 @@ describe 'email sending' do
       end
     end
 
-    post "/submit?#{@request}"
+    capture_io do
+      post "/submit?#{@request}"
+    end
     last_response.body.must_match '<h1>Error</h1>'
   end
 end
