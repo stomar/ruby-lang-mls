@@ -1,7 +1,6 @@
 require "minitest/autorun"
 
-DB_FILE = File.expand_path(File.dirname(__FILE__) + '/test.db')
-ENV["DATABASE_URL"] = "sqlite:///#{DB_FILE}"
+ENV["DATABASE_URL"] = "sqlite::memory:"
 
 require_relative "../app"
 
