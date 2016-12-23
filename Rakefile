@@ -20,8 +20,7 @@ desc "List all log entries"
 task :logs do
   require_relative "app"
 
-  mllogger = MLLogger.new
-  puts mllogger.entries.join("\n") << "\n"
+  puts MLLogger.new.entries.join("\n") << "\n"
 end
 
 namespace :logs do
@@ -30,8 +29,7 @@ namespace :logs do
   task :errors do
     require_relative "app"
 
-    mllogger = MLLogger.new
-    puts mllogger.errors.join("\n") << "\n"
+    puts MLLogger.new.errors.join("\n") << "\n"
   end
 
   desc "Cleanup logs"
@@ -39,8 +37,7 @@ namespace :logs do
     require_relative "app"
     require_relative "lib/mllogcleaner"
 
-    mllogcleaner = MLLogCleaner.new
-    mllogcleaner.cleanup_all
+    MLLogCleaner.new.cleanup_all
   end
 end
 
@@ -49,8 +46,7 @@ desc "List all daily stats entries"
 task :stats do
   require_relative "app"
 
-  mldailystats = MLStatsHandler.new
-  puts mldailystats.entries.join("\n") << "\n"
+  puts MLStatsHandler.new.entries.join("\n") << "\n"
 end
 
 
