@@ -49,7 +49,7 @@ desc "List all daily stats entries"
 task :stats do
   require_relative "app"
 
-  mldailystats = MLDailyStats.new
+  mldailystats = MLStatsHandler.new
   puts mldailystats.entries.join("\n") << "\n"
 end
 

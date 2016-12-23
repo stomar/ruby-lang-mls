@@ -45,7 +45,7 @@ DataMapper.finalize
 
 
 # Returns daily stats entries.
-class MLDailyStats
+class MLStatsHandler
 
   def initialize
     @db = DB

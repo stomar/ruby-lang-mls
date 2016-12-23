@@ -48,7 +48,7 @@ class App < Sinatra::Base
                      :smtp_port    => SMTP_PORT
                    )
     set :mllogger, MLLogger.new(:no_logs => NO_LOGS)
-    set :mlstats,  MLDailyStats.new
+    set :mlstats,  MLStatsHandler.new
 
     messages = {
       :success => {
