@@ -40,15 +40,15 @@ class App < Sinatra::Base
   set :environment, :production
 
   configure do
-    set :mlmailer, MLMailer.new(
-                     :sender_email => SENDER_EMAIL,
-                     :smtp_user    => SMTP_USER,
-                     :smtp_password => SMTP_PASSWORD,
-                     :smtp_address => SMTP_ADDRESS,
-                     :smtp_port    => SMTP_PORT
-                   )
-    set :mllogger, MLLogger.new(:no_logs => NO_LOGS)
-    set :mlstats,  MLStatsHandler.new
+    set :mailer, MLMailer.new(
+                   :sender_email  => SENDER_EMAIL,
+                   :smtp_user     => SMTP_USER,
+                   :smtp_password => SMTP_PASSWORD,
+                   :smtp_address  => SMTP_ADDRESS,
+                   :smtp_port     => SMTP_PORT
+                 )
+    set :logger, MLLogger.new(:no_logs => NO_LOGS)
+    set :stats,  MLStatsHandler.new
 
     messages = {
       :success => {
@@ -86,17 +86,17 @@ class App < Sinatra::Base
 
     if @ml_request.valid?
       begin
-        settings.mlmailer.mail(@ml_request.mail_options)
+        settings.mailer.mail(@ml_request.mail_options)
         status = :success
-        settings.mllogger.log(@ml_request.list, @ml_request.action)
-        settings.mlstats.increment(@ml_request.list, @ml_request.action)
+        settings.logger.log(@ml_request.list, @ml_request.action)
+        settings.stats.increment(@ml_request.list, @ml_request.action)
       rescue => e
         status = :error
-        settings.mllogger.log_error(@ml_request.list, @ml_request.action, e)
+        settings.logger.log_error(@ml_request.list, @ml_request.action, e)
       end
     else
       status = :invalid
-      settings.mllogger.log_invalid(@ml_request.list, @ml_request.action)
+      settings.logger.log_invalid(@ml_request.list, @ml_request.action)
     end
 
     @header  = settings.messages[status][:header]
@@ -112,6 +112,6 @@ class App < Sinatra::Base
 
   get '/logs/?' do
     content_type :txt
-    settings.mllogger.recent_entries.join("\n") << "\n"
+    settings.logger.recent_entries.join("\n") << "\n"
   end
 end
