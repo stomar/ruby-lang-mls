@@ -6,6 +6,7 @@ require_relative "../app"
 
 
 def setup_database
+  load File.expand_path("../fixtures.rb", __FILE__)
 end
 
 def teardown_database
