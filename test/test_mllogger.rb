@@ -54,4 +54,10 @@ describe MLLogger do
     @logger.recent_entries.size.must_equal 40
     @logger.recent_entries.last.must_match /ruby-talk, latest/
   end
+
+  it "can return all errors in correct order" do
+    @logger.errors.size.must_equal 2
+    @logger.errors.first.must_match /2000-01-02 12:00:03.*test_error/
+    @logger.errors.last.must_match  /2000-01-02 12:00:04.*test_invalid/
+  end
 end
