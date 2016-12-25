@@ -26,7 +26,8 @@ DataMapper.finalize
 
 
 # Logs subscribe/unsubscribe events to stderr and database.
-class MLLogger
+module MLS
+class Logger
 
   def initialize(options = {})
     @no_logs = options.fetch(:no_logs, false)
@@ -92,4 +93,5 @@ class MLLogger
       :exception => exception ? exception.class.to_s : nil
     )  if @db
   end
+end
 end

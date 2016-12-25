@@ -37,15 +37,15 @@ class App < Sinatra::Base
   set :environment, :production
 
   configure do
-    set :mailer, MLMailer.new(
+    set :mailer, MLS::Mailer.new(
                    :sender_email  => SENDER_EMAIL,
                    :smtp_user     => SMTP_USER,
                    :smtp_password => SMTP_PASSWORD,
                    :smtp_address  => SMTP_ADDRESS,
                    :smtp_port     => SMTP_PORT
                  )
-    set :logger, MLLogger.new(:no_logs => NO_LOGS)
-    set :stats,  MLStatsHandler.new
+    set :logger, MLS::Logger.new(:no_logs => NO_LOGS)
+    set :stats,  MLS::StatsHandler.new
 
     messages = {
       :success => {
@@ -79,7 +79,7 @@ class App < Sinatra::Base
   end
 
   post '/submit' do
-    @ml_request = MLRequest.new(params)
+    @ml_request = MLS::Request.new(params)
 
     if @ml_request.valid?
       begin

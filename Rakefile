@@ -20,7 +20,7 @@ desc "List all log entries"
 task :logs do
   require_relative "app"
 
-  puts MLLogger.new.entries.join("\n") << "\n"
+  puts MLS::Logger.new.entries.join("\n") << "\n"
 end
 
 namespace :logs do
@@ -29,7 +29,7 @@ namespace :logs do
   task :errors do
     require_relative "app"
 
-    puts MLLogger.new.errors.join("\n") << "\n"
+    puts MLS::Logger.new.errors.join("\n") << "\n"
   end
 
   desc "Cleanup logs"
@@ -37,7 +37,7 @@ namespace :logs do
     require_relative "app"
     require_relative "lib/mls/logcleaner"
 
-    MLLogCleaner.new.cleanup_all
+    MLS::LogCleaner.new.cleanup_all
   end
 end
 
@@ -46,7 +46,7 @@ desc "List all daily stats entries"
 task :stats do
   require_relative "app"
 
-  puts MLStatsHandler.new.entries.join("\n") << "\n"
+  puts MLS::StatsHandler.new.entries.join("\n") << "\n"
 end
 
 
@@ -57,7 +57,7 @@ namespace :mailer do
     require_relative "lib/mls/mailerstats"
 
     if MAILER_API_URL && MAILER_API_KEY
-      stats = MLMailerStats.new(
+      stats = MLS::MailerStats.new(
                 :api_url => MAILER_API_URL,
                 :api_key => MAILER_API_KEY
               )
@@ -72,7 +72,7 @@ namespace :mailer do
     require_relative "app"
 
     if ADMIN_EMAIL
-      mailer = MLMailer.new(
+      mailer = MLS::Mailer.new(
                  :sender_email => SENDER_EMAIL,
                  :smtp_user    => SMTP_USER,
                  :smtp_password => SMTP_PASSWORD,

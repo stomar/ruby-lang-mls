@@ -1,11 +1,11 @@
 require_relative "helper"
 
 
-describe MLLogger do
+describe MLS::Logger do
 
   before do
     setup_database
-    @logger = MLLogger.new
+    @logger = MLS::Logger.new
   end
 
   after do

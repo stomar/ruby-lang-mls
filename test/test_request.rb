@@ -1,17 +1,17 @@
 require_relative 'helper'
 
 
-describe MLRequest do
+describe MLS::Request do
 
   it 'returns empty strings for missing or nil request parameters' do
-    @request = MLRequest.new({ :list => nil })
+    @request = MLS::Request.new({ :list => nil })
     @request.list.must_equal ''
     @request.email.must_equal ''
     @request.action.must_equal ''
   end
 
   it 'can validate a valid request' do
-    @request = MLRequest.new({
+    @request = MLS::Request.new({
                  :list   => 'ruby-talk',
                  :email  => 'john.doe@test.org',
                  :action => 'subscribe'
@@ -20,7 +20,7 @@ describe MLRequest do
   end
 
   it 'can validate an invalid request' do
-    @request = MLRequest.new({
+    @request = MLS::Request.new({
                  :list   => 'ruby-talk',
                  :action => 'subscribe'
                })

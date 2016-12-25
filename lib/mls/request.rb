@@ -1,4 +1,5 @@
-class MLRequest
+module MLS
+class Request
 
   attr_reader :list, :email, :action
 
@@ -21,4 +22,5 @@ class MLRequest
       :body => "#{action} address=#{email}"
     }
   end
+end
 end

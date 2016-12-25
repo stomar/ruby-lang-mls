@@ -45,7 +45,8 @@ DataMapper.finalize
 
 
 # Returns daily stats entries.
-class MLStatsHandler
+module MLS
+class StatsHandler
 
   def initialize
     @db = DB
@@ -74,4 +75,5 @@ class MLStatsHandler
 
     [DailyStats.headers] + entries.map(&:to_string)
   end
+end
 end

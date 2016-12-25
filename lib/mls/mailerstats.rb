@@ -1,7 +1,8 @@
 require "net/http"
 require "json"
 
-class MLMailerStats
+module MLS
+class MailerStats
 
   def initialize(options)
     @api_url = options[:api_url].dup
@@ -51,4 +52,5 @@ class MLMailerStats
       {}
     end
   end
+end
 end

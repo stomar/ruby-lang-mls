@@ -1,5 +1,6 @@
 # Removes log entries for successful requests.
-class MLLogCleaner
+module MLS
+class LogCleaner
 
   def initialize
     @db = DB
@@ -18,4 +19,5 @@ class MLLogCleaner
       entry.destroy
     end
   end
+end
 end

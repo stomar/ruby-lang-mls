@@ -2,7 +2,8 @@ require "pony"
 
 
 # Mails requests via SMTP.
-class MLMailer
+module MLS
+class Mailer
 
   def initialize(options)
     @sender_email = options[:sender_email]
@@ -29,4 +30,5 @@ class MLMailer
   def mail(options)
     Pony.mail(options)
   end
+end
 end
