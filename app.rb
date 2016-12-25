@@ -6,12 +6,9 @@
 #
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 
-require 'sinatra/base'
+require "sinatra/base"
 
-require './lib/mlrequest'
-require './lib/mlmailer'
-require './lib/mllogger'
-require './lib/mldailystats'
+require_relative "lib/mls"
 
 ENV["TZ"] = "UTC"
 

@@ -35,7 +35,7 @@ namespace :logs do
   desc "Cleanup logs"
   task :cleanup do
     require_relative "app"
-    require_relative "lib/mllogcleaner"
+    require_relative "lib/mls/logcleaner"
 
     MLLogCleaner.new.cleanup_all
   end
@@ -54,7 +54,7 @@ namespace :mailer do
 
   desc "List email service stats"
   task :stats do
-    require_relative "lib/mlmailerstats"
+    require_relative "lib/mls/mailerstats"
 
     if MAILER_API_URL && MAILER_API_KEY
       stats = MLMailerStats.new(
