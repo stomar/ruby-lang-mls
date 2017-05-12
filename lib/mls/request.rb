@@ -13,7 +13,19 @@ module MLS
     end
 
     def valid?
-      !email.strip.empty? && LISTS.include?(list) && ACTIONS.include?(action)
+      valid_email? && valid_list? && valid_action?
+    end
+
+    def valid_email?
+      !email.strip.empty?
+    end
+
+    def valid_list?
+      LISTS.include?(list)
+    end
+
+    def valid_action?
+      ACTIONS.include?(action)
     end
 
     def mail_options
