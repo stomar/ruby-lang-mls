@@ -20,7 +20,7 @@ class SampleRequest
   end
 
   def to_s
-    parts = @fields.sort.map {|k,v| "#{k}=#{Rack::Utils.escape_path(v)}" }
+    parts = @fields.sort.map {|k,v| "#{k}=#{Rack::Utils.escape(v)}" }
 
     parts.join('&')
   end
