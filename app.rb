@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # ruby-lang.org mailing list service/subscriber
 #
 # project home page: https://github.com/stomar/ruby-lang-mls
@@ -50,13 +52,13 @@ class App < Sinatra::Base
     messages = {
       :success => {
         :header => 'Confirmation',
-        :text   => 'Your request has been accepted. ' <<
+        :text   => 'Your request has been accepted. '.dup <<
                    'To complete your request, please follow the instructions ' <<
                    'in the email you should receive shortly.'
       },
       :invalid => {
         :header => 'Invalid request',
-        :text   => 'Your request is invalid. ' <<
+        :text   => 'Your request is invalid. '.dup <<
                    'Please make sure that you filled out all fields.'
       },
       :error => {

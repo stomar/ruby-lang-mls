@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 fixtures = Hash.new
 
 fixtures[:log] = [

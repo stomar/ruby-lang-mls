@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rake/testtask"
 
 MAILER_API_URL = ENV["MAILER_API_URL"]

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Removes log entries for successful requests.
 module MLS
   class LogCleaner
