@@ -1,7 +1,8 @@
 source "https://rubygems.org"
-ruby '2.5.1'
+ruby '2.6.0'
 gem 'sinatra'
 gem 'pony'
+gem "rack", ">= 2.0.6"
 gem 'rack-ssl'
 gem 'rake'
 gem 'thin'
