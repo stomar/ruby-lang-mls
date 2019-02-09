@@ -42,7 +42,7 @@ module MLS
       request = Net::HTTP::Get.new(uri)
       request.basic_auth(*@api_key.split(":"))
 
-      res = Net::HTTP.start(uri.host, uri.port, :use_ssl => true) do |http|
+      res = Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
         http.ssl_version = :SSLv3
         http.request request

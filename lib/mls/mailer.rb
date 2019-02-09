@@ -15,16 +15,16 @@ module MLS
       @smtp_port     = options[:smtp_port]
 
       Pony.options = {
-        :subject => "",
-        :from => @sender_email,
-        :via => :smtp,
-        :via_options => {
-          :user_name      => @smtp_user,
-          :password       => @smtp_password,
-          :address        => @smtp_address,
-          :port           => @smtp_port,
-          :authentication => :plain,
-          :enable_starttls_auto => true
+        subject: "",
+        from: @sender_email,
+        via: :smtp,
+        via_options: {
+          user_name: @smtp_user,
+          password: @smtp_password,
+          address: @smtp_address,
+          port: @smtp_port,
+          authentication: :plain,
+          enable_starttls_auto: true
         }
       }
     end

@@ -40,36 +40,36 @@ class App < Sinatra::Base
 
   configure do
     set :mailer, MLS::Mailer.new(
-                   :sender_email  => SENDER_EMAIL,
-                   :smtp_user     => SMTP_USER,
-                   :smtp_password => SMTP_PASSWORD,
-                   :smtp_address  => SMTP_ADDRESS,
-                   :smtp_port     => SMTP_PORT
+                   sender_email: SENDER_EMAIL,
+                   smtp_user: SMTP_USER,
+                   smtp_password: SMTP_PASSWORD,
+                   smtp_address: SMTP_ADDRESS,
+                   smtp_port: SMTP_PORT
                  )
-    set :logger, MLS::Logger.new(:no_logs => NO_LOGS)
+    set :logger, MLS::Logger.new(no_logs: NO_LOGS)
     set :stats,  MLS::StatsHandler.new
 
     messages = {
-      :success => {
-        :header => "Confirmation",
-        :text   => "Your request has been accepted. ".dup <<
-                   "To complete your request, please follow the instructions " <<
-                   "in the email you should receive shortly."
+      success: {
+        header: "Confirmation",
+        text: "Your request has been accepted. ".dup <<
+              "To complete your request, please follow the instructions " <<
+              "in the email you should receive shortly."
       },
-      :invalid => {
-        :header => "Invalid request",
-        :text   => "Your request is invalid. ".dup <<
-                   "Please make sure that you filled out all fields."
+      invalid: {
+        header: "Invalid request",
+        text: "Your request is invalid. ".dup <<
+              "Please make sure that you filled out all fields."
       },
-      :error => {
-        :header => "Error",
-        :text   => "Sorry, an error occurred during processing of your request."
+      error: {
+        header: "Error",
+        text: "Sorry, an error occurred during processing of your request."
       },
     }
 
     set :messages, messages
 
-    set :status_codes, { :success => 200, :invalid => 400, :error => 500 }
+    set :status_codes, { success: 200, invalid: 400, error: 500 }
   end
 
   def escape(text)

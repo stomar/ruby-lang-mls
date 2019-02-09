@@ -27,9 +27,9 @@ module MLS
       return ["No logs available"]  unless @db
 
       if limit
-        entries = Log.all(:order => [:timestamp.desc], :limit => limit).to_a.reverse
+        entries = Log.all(order: [:timestamp.desc], limit: limit).to_a.reverse
       else
-        entries = Log.all(:order => [:timestamp.asc])
+        entries = Log.all(order: [:timestamp.asc])
       end
 
       entries.map(&:to_string)
@@ -61,11 +61,11 @@ module MLS
       warn time.strftime("[%Y-%m-%d %H:%M:%S %z]") + " #{list}, #{action}, #{status}"
       warn "#{exception.class}: #{exception}"  if exception
       Log.create(
-        :timestamp => time,
-        :status => status,
-        :list => list,
-        :action => action,
-        :exception => exception ? exception.class.to_s : nil
+        timestamp: time,
+        status: status,
+        list: list,
+        action: action,
+        exception: exception ? exception.class.to_s : nil
       )  if @db
     end
   end

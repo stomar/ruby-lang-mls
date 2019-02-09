@@ -8,15 +8,15 @@ class DailyStats
   include DataMapper::Resource
 
   property :id,         Serial
-  property :date,       Date,    :required => true
-  property :talk_subsc, Integer, :default => 0
-  property :talk_unsub, Integer, :default => 0
-  property :core_subsc, Integer, :default => 0
-  property :core_unsub, Integer, :default => 0
-  property :doc_subsc,  Integer, :default => 0
-  property :doc_unsub,  Integer, :default => 0
-  property :cvs_subsc,  Integer, :default => 0
-  property :cvs_unsub,  Integer, :default => 0
+  property :date,       Date,    required: true
+  property :talk_subsc, Integer, default: 0
+  property :talk_unsub, Integer, default: 0
+  property :core_subsc, Integer, default: 0
+  property :core_unsub, Integer, default: 0
+  property :doc_subsc,  Integer, default: 0
+  property :doc_unsub,  Integer, default: 0
+  property :cvs_subsc,  Integer, default: 0
+  property :cvs_unsub,  Integer, default: 0
 
   def self.headers
     %w{date talk_subsc talk_unsub core_subsc core_unsub

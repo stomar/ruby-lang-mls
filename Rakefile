@@ -7,7 +7,7 @@ MAILER_API_KEY = ENV["MAILER_API_KEY"]
 ADMIN_EMAIL  = ENV["ADMIN_EMAIL"]
 
 
-task :default => [:test]
+task default: [:test]
 
 Rake::TestTask.new do |t|
   t.pattern = "test/**/test_*.rb"
@@ -59,8 +59,8 @@ namespace :mailer do
 
     if MAILER_API_URL && MAILER_API_KEY
       stats = MLS::MailerStats.new(
-                :api_url => MAILER_API_URL,
-                :api_key => MAILER_API_KEY
+                api_url: MAILER_API_URL,
+                api_key: MAILER_API_KEY
               )
       puts stats.get
     else
@@ -74,18 +74,18 @@ namespace :mailer do
 
     if ADMIN_EMAIL
       mailer = MLS::Mailer.new(
-                 :sender_email => SENDER_EMAIL,
-                 :smtp_user    => SMTP_USER,
-                 :smtp_password => SMTP_PASSWORD,
-                 :smtp_address => SMTP_ADDRESS,
-                 :smtp_port    => SMTP_PORT
+                 sender_email: SENDER_EMAIL,
+                 smtp_user: SMTP_USER,
+                 smtp_password: SMTP_PASSWORD,
+                 smtp_address: SMTP_ADDRESS,
+                 smtp_port: SMTP_PORT
                )
 
       mailer.mail(
-        :to      => ADMIN_EMAIL,
-        :from    => ADMIN_EMAIL,
-        :subject => "Test email for ruby-lang-mls",
-        :body    => "This email has been sent with `rake mailer_test'."
+        to: ADMIN_EMAIL,
+        from: ADMIN_EMAIL,
+        subject: "Test email for ruby-lang-mls",
+        body: "This email has been sent with `rake mailer_test'."
       )
     else
       warn "ADMIN_EMAIL not defined"

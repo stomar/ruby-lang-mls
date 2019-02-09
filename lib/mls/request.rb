@@ -32,8 +32,8 @@ module MLS
 
     def mail_options
       {
-        :to   => "#{list}-request@ruby-lang.org",
-        :body => "#{action} address=#{email}"
+        to: "#{list}-request@ruby-lang.org",
+        body: "#{action} address=#{email}"
       }
     end
   end
