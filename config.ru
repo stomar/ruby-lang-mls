@@ -1,5 +1,5 @@
-require 'rack/ssl'
-require './app'
+require "rack/ssl"
+require "./app"
 
 if ENV["RACK_ENV"] == "production"
   use Rack::SSL

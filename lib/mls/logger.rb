@@ -8,7 +8,7 @@ module MLS
       @no_logs = options.fetch(:no_logs, false)
       @db = DB
 
-      warn 'Logging to stdout only'  unless @db
+      warn "Logging to stdout only"  unless @db
     end
 
     def log(list, action)
@@ -58,7 +58,7 @@ module MLS
 
       time = Time.now.utc
 
-      warn time.strftime('[%Y-%m-%d %H:%M:%S %z]') + " #{list}, #{action}, #{status}"
+      warn time.strftime("[%Y-%m-%d %H:%M:%S %z]") + " #{list}, #{action}, #{status}"
       warn "#{exception.class}: #{exception}"  if exception
       Log.create(
         :timestamp => time,

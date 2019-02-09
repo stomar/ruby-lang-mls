@@ -14,14 +14,14 @@ require_relative "lib/mls"
 
 ENV["TZ"] = "UTC"
 
-SENDER_EMAIL = ENV['SENDER_EMAIL']
-SMTP_USER    = ENV['SMTP_USER']
-SMTP_PASSWORD = ENV['SMTP_PASSWORD']
-SMTP_ADDRESS = ENV['SMTP_SERVER'] || ''
-SMTP_PORT    = ENV['SMTP_PORT'] || '587'
-NO_CONFIRM   = ENV['NO_CONFIRM'] == 'true'
-NO_LOGS      = ENV['NO_LOGS'] == 'true'
-DATABASE_URL = ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/development.db"
+SENDER_EMAIL = ENV["SENDER_EMAIL"]
+SMTP_USER    = ENV["SMTP_USER"]
+SMTP_PASSWORD = ENV["SMTP_PASSWORD"]
+SMTP_ADDRESS = ENV["SMTP_SERVER"] || ""
+SMTP_PORT    = ENV["SMTP_PORT"] || "587"
+NO_CONFIRM   = ENV["NO_CONFIRM"] == "true"
+NO_LOGS      = ENV["NO_LOGS"] == "true"
+DATABASE_URL = ENV["DATABASE_URL"] || "sqlite3://#{Dir.pwd}/development.db"
 
 
 begin
@@ -51,19 +51,19 @@ class App < Sinatra::Base
 
     messages = {
       :success => {
-        :header => 'Confirmation',
-        :text   => 'Your request has been accepted. '.dup <<
-                   'To complete your request, please follow the instructions ' <<
-                   'in the email you should receive shortly.'
+        :header => "Confirmation",
+        :text   => "Your request has been accepted. ".dup <<
+                   "To complete your request, please follow the instructions " <<
+                   "in the email you should receive shortly."
       },
       :invalid => {
-        :header => 'Invalid request',
-        :text   => 'Your request is invalid. '.dup <<
-                   'Please make sure that you filled out all fields.'
+        :header => "Invalid request",
+        :text   => "Your request is invalid. ".dup <<
+                   "Please make sure that you filled out all fields."
       },
       :error => {
-        :header => 'Error',
-        :text   => 'Sorry, an error occurred during processing of your request.'
+        :header => "Error",
+        :text   => "Sorry, an error occurred during processing of your request."
       },
     }
 
@@ -76,11 +76,11 @@ class App < Sinatra::Base
     Rack::Utils.escape_html(text)
   end
 
-  get '/' do
+  get "/" do
     erb :index
   end
 
-  post '/submit' do
+  post "/submit" do
     @ml_request = MLS::Request.new(params)
 
     if @ml_request.valid?
@@ -109,7 +109,7 @@ class App < Sinatra::Base
     end
   end
 
-  get '/logs/?' do
+  get "/logs/?" do
     content_type :txt
     settings.logger.recent_entries.join("\n") << "\n"
   end

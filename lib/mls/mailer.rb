@@ -15,7 +15,7 @@ module MLS
       @smtp_port     = options[:smtp_port]
 
       Pony.options = {
-        :subject => '',
+        :subject => "",
         :from => @sender_email,
         :via => :smtp,
         :via_options => {
