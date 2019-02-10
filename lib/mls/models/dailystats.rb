@@ -20,8 +20,8 @@ class DailyStats
   property :cvs_unsub,  Integer, default: 0
 
   def self.headers
-    %w{date talk_subsc talk_unsub core_subsc core_unsub
-       doc_subsc doc_unsub cvs_subsc cvs_unsub}.join(",")
+    %w[date talk_subsc talk_unsub core_subsc core_unsub
+       doc_subsc doc_unsub cvs_subsc cvs_unsub].join(",")
   end
 
   def to_string

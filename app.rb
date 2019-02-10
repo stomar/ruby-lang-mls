@@ -66,7 +66,7 @@ class App < Sinatra::Base
       error: {
         header: "Error",
         text: "Sorry, an error occurred during processing of your request."
-      },
+      }
     }
 
     set :messages, messages

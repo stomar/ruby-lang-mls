@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-fixtures = Hash.new
+fixtures = {}
 
 fixtures[:log] = [
   { timestamp: Time.utc(2000, 1, 2, 12, 0, 2), status: "Success", list: "ruby-talk", action: "test" },
