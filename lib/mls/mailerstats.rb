@@ -25,7 +25,7 @@ module MLS
     private
 
     def extract_stats
-      data = get_data
+      data = request_data
 
       stats = {}
 
@@ -37,7 +37,7 @@ module MLS
       stats
     end
 
-    def get_data
+    def request_data
       uri = URI.parse(@api_url)
       request = Net::HTTP::Get.new(uri)
       request.basic_auth(*@api_key.split(":"))
