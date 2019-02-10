@@ -5,8 +5,8 @@ module MLS
 
     attr_reader :list, :email, :action
 
-    ACTIONS = %w[subscribe unsubscribe]
-    LISTS   = %w[ruby-talk ruby-core ruby-doc ruby-cvs]
+    ACTIONS = %w[subscribe unsubscribe].freeze
+    LISTS   = %w[ruby-talk ruby-core ruby-doc ruby-cvs].freeze
 
     def initialize(params)
       @list   = params[:list]   || ""
