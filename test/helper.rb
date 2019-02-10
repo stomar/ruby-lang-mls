@@ -16,7 +16,6 @@ def teardown_database
   DailyStats.destroy  if DB
 end
 
-
 def silence_warnings
   original_verbose, $VERBOSE = $VERBOSE, nil
   yield

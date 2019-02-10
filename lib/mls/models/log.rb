@@ -5,6 +5,7 @@ require "dm-migrations"
 
 
 class Log
+
   include DataMapper::Resource
 
   property :id,        Serial

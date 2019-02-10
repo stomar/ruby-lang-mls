@@ -5,6 +5,7 @@ require "dm-migrations"
 
 
 class DailyStats
+
   include DataMapper::Resource
 
   property :id,         Serial
