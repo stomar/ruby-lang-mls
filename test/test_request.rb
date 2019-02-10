@@ -14,18 +14,18 @@ describe MLS::Request do
 
   it "can validate a valid request" do
     @request = MLS::Request.new(
-                 list: "ruby-talk",
-                 email: "john.doe@test.org",
-                 action: "subscribe"
-               )
+      list: "ruby-talk",
+      email: "john.doe@test.org",
+      action: "subscribe"
+    )
     @request.valid?.must_equal true
   end
 
   it "can validate an invalid request" do
     @request = MLS::Request.new(
-                 list: "ruby-talk",
-                 action: "subscribe"
-               )
+      list: "ruby-talk",
+      action: "subscribe"
+    )
     @request.valid?.must_equal false
   end
 end

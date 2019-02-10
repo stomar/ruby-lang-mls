@@ -59,9 +59,9 @@ namespace :mailer do
 
     if MAILER_API_URL && MAILER_API_KEY
       stats = MLS::MailerStats.new(
-                api_url: MAILER_API_URL,
-                api_key: MAILER_API_KEY
-              )
+        api_url: MAILER_API_URL,
+        api_key: MAILER_API_KEY
+      )
       puts stats.get
     else
       warn "MAILER_API_URL or MAILER_API_KEY not defined"
@@ -74,12 +74,12 @@ namespace :mailer do
 
     if ADMIN_EMAIL
       mailer = MLS::Mailer.new(
-                 sender_email: SENDER_EMAIL,
-                 smtp_user: SMTP_USER,
-                 smtp_password: SMTP_PASSWORD,
-                 smtp_address: SMTP_ADDRESS,
-                 smtp_port: SMTP_PORT
-               )
+        sender_email: SENDER_EMAIL,
+        smtp_user: SMTP_USER,
+        smtp_password: SMTP_PASSWORD,
+        smtp_address: SMTP_ADDRESS,
+        smtp_port: SMTP_PORT
+      )
 
       mailer.mail(
         to: ADMIN_EMAIL,

@@ -153,8 +153,8 @@ describe "email sending" do
 
   it "sends an email for a vaild request" do
     expected = {
-          to: "ruby-talk-request@ruby-lang.org",
-          body: "subscribe address=john.doe@test.org"
+      to: "ruby-talk-request@ruby-lang.org",
+      body: "subscribe address=john.doe@test.org"
     }
 
     silence_warnings do

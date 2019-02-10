@@ -39,13 +39,15 @@ class App < Sinatra::Base
   set :environment, :production
 
   configure do
-    set :mailer, MLS::Mailer.new(
-                   sender_email: SENDER_EMAIL,
-                   smtp_user: SMTP_USER,
-                   smtp_password: SMTP_PASSWORD,
-                   smtp_address: SMTP_ADDRESS,
-                   smtp_port: SMTP_PORT
-                 )
+    mailer = MLS::Mailer.new(
+      sender_email: SENDER_EMAIL,
+      smtp_user: SMTP_USER,
+      smtp_password: SMTP_PASSWORD,
+      smtp_address: SMTP_ADDRESS,
+      smtp_port: SMTP_PORT
+    )
+
+    set :mailer, mailer
     set :logger, MLS::Logger.new(no_logs: NO_LOGS)
     set :stats,  MLS::StatsHandler.new
 
