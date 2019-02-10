@@ -1,18 +1,24 @@
 source "https://rubygems.org"
+
 ruby "2.6.0"
+
 gem "sinatra"
-gem "pony"
+
 gem "rack", ">= 2.0.6"
 gem "rack-ssl"
-gem "rake"
 gem "thin"
+
 gem "dm-core"
 gem "dm-migrations"
 
+gem "pony"
+
+gem "rake"
+
 group :development do
+  gem "dm-sqlite-adapter"
   gem "minitest"
   gem "rack-test"
-  gem "dm-sqlite-adapter"
 end
 
 group :production do
