@@ -54,13 +54,13 @@ class App < Sinatra::Base
     messages = {
       success: {
         header: "Confirmation",
-        text: "Your request has been accepted. ".dup <<
-              "To complete your request, please follow the instructions " <<
+        text: "Your request has been accepted. " \
+              "To complete your request, please follow the instructions " \
               "in the email you should receive shortly."
       },
       invalid: {
         header: "Invalid request",
-        text: "Your request is invalid. ".dup <<
+        text: "Your request is invalid. " \
               "Please make sure that you filled out all fields."
       },
       error: {
