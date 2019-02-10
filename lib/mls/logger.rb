@@ -26,11 +26,11 @@ module MLS
     def entries(limit: nil)
       return ["No logs available"]  unless @db
 
-      if limit
-        entries = Log.all(order: [:timestamp.desc], limit: limit).to_a.reverse
-      else
-        entries = Log.all(order: [:timestamp.asc])
-      end
+      entries = if limit
+                  Log.all(order: [:timestamp.desc], limit: limit).to_a.reverse
+                else
+                  Log.all(order: [:timestamp.asc])
+                end
 
       entries.map(&:to_string)
     end
@@ -42,11 +42,11 @@ module MLS
     def errors(limit: nil)
       return ["No logs available"]  unless @db
 
-      if limit
-        entries = Log.all(:status.not => "Success", :order => [:timestamp.desc], :limit => limit).to_a.reverse
-      else
-        entries = Log.all(:status.not => "Success", :order => [:timestamp.asc])
-      end
+      entries = if limit
+                  Log.all(:status.not => "Success", :order => [:timestamp.desc], :limit => limit).to_a.reverse
+                else
+                  Log.all(:status.not => "Success", :order => [:timestamp.asc])
+                end
 
       entries.map(&:to_string)
     end

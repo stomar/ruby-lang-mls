@@ -26,11 +26,11 @@ module MLS
     def entries(limit: nil)
       return ["No stats available"]  unless @db
 
-      if limit
-        entries = DailyStats.all(order: [:date.desc], limit: limit).to_a.reverse
-      else
-        entries = DailyStats.all(order: [:date.asc])
-      end
+      entries = if limit
+                  DailyStats.all(order: [:date.desc], limit: limit).to_a.reverse
+                else
+                  DailyStats.all(order: [:date.asc])
+                end
 
       [DailyStats.headers] + entries.map(&:to_string)
     end
