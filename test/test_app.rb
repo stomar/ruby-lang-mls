@@ -172,7 +172,7 @@ describe "email sending" do
 
   it "indicates an error for failed send process" do
     silence_warnings do
-      def Pony.mail(options)
+      def Pony.mail(_options)
         raise "fake exception"
       end
     end
