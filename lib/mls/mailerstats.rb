@@ -30,9 +30,7 @@ module MLS
       stats = {}
 
       data_stats = data["Data"].first
-      if data_stats
-        stats[:today] = data_stats["DeliveredCount"]
-      end
+      stats[:today] = data_stats["DeliveredCount"]  if data_stats
 
       stats
     end

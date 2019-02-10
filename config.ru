@@ -1,8 +1,6 @@
 require "rack/ssl"
 require "./app"
 
-if ENV["RACK_ENV"] == "production"
-  use Rack::SSL
-end
+use Rack::SSL  if ENV["RACK_ENV"] == "production"
 
 run App

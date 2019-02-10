@@ -60,13 +60,16 @@ module MLS
 
       warn time.strftime("[%Y-%m-%d %H:%M:%S %z]") + " #{list}, #{action}, #{status}"
       warn "#{exception.class}: #{exception}"  if exception
+
+      return  unless @db
+
       Log.create(
         timestamp: time,
         status: status,
         list: list,
         action: action,
         exception: exception ? exception.class.to_s : nil
-      )  if @db
+      )
     end
   end
 end
