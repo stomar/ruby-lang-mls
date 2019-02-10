@@ -33,7 +33,7 @@ class DailyStats
     column = column_from_list_action(list, action)
 
     new_value = self[column] + 1
-    self.update(column => new_value)
+    update(column => new_value)
   end
 
   private
