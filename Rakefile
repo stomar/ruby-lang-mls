@@ -4,7 +4,7 @@ require "rake/testtask"
 
 MAILER_API_URL = ENV["MAILER_API_URL"]
 MAILER_API_KEY = ENV["MAILER_API_KEY"]
-ADMIN_EMAIL  = ENV["ADMIN_EMAIL"]
+ADMIN_EMAIL    = ENV["ADMIN_EMAIL"]
 
 
 task default: [:test]
