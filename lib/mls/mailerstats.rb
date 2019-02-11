@@ -16,10 +16,7 @@ module MLS
     def get
       stats = extract_stats
 
-      info = "Sent emails "
-      info << "today: %3d\n" % stats[:today]
-
-      info
+      "Sent emails today: %3d\n" % stats[:today]
     end
 
     private
