@@ -1,52 +1,43 @@
 # frozen_string_literal: true
 
 require "net/http"
+require "uri"
 require "json"
 
 module MLS
   class MailerStats
 
     def initialize(options)
-      @api_url = options[:api_url].dup
-      @api_url << "/"  unless @api_url[-1] == "/"
-
+      @api_url = options[:api_url]
       @api_key = options[:api_key]
+      @user, @pwd = @api_key.split(":")  if @api_key
     end
 
     def get
-      stats = extract_stats
-
-      "Sent emails today: %3d\n" % stats[:today]
+      "Sent emails today: %3d\n" % delivered_count
     end
 
     private
 
-    def extract_stats
-      data = request_data
+    def delivered_count
+      data = JSON.parse(request_json_data)
 
-      stats = {}
-
-      data_stats = data["Data"].first
-      stats[:today] = data_stats["DeliveredCount"]  if data_stats
-
-      stats
+      data["Data"].first["DeliveredCount"]
     end
 
-    def request_data
-      uri = URI.parse(@api_url)
-      request = Net::HTTP::Get.new(uri)
-      request.basic_auth(*@api_key.split(":"))
+    def request_json_data
+      uri = URI(@api_url)
+      ssl_options = { use_ssl: true, verify_mode: OpenSSL::SSL::VERIFY_PEER }
 
-      res = Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
-        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-        http.ssl_version = :SSLv3
-        http.request request
-      end
+      Net::HTTP.start(uri.host, uri.port, ssl_options) do |http|
+        request = Net::HTTP::Get.new(uri)
+        request.basic_auth(@user, @pwd)
+        response = http.request(request)
 
-      if res.is_a? Net::HTTPSuccess
-        JSON.parse(res.body)
-      else
-        {}
+        msg = "Unable to retrieve mailer stats data (code #{response.code})"
+        raise msg  unless response.is_a?(Net::HTTPSuccess)
+
+        response.body
       end
     end
   end
