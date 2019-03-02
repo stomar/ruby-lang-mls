@@ -3,8 +3,9 @@
 require "pony"
 
 
-# Mails requests via SMTP.
 module MLS
+
+  # Mails requests via SMTP.
   class Mailer
 
     def initialize(options)

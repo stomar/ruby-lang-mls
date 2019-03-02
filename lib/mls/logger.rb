@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-# Logs subscribe/unsubscribe events to stderr and database.
 module MLS
+
+  # Logs subscribe/unsubscribe events to stderr and database.
   class Logger
 
     def initialize(options = {})

@@ -3,8 +3,9 @@
 require "date"
 
 
-# Returns daily stats entries.
 module MLS
+
+  # Updates/returns daily stats entries.
   class StatsHandler
 
     def initialize

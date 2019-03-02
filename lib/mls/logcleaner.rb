@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-# Removes log entries for successful requests.
 module MLS
+
+  # Removes log entries for successful requests.
   class LogCleaner
 
     def initialize

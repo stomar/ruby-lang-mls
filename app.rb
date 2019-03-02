@@ -34,6 +34,7 @@ rescue StandardError, LoadError => error
 end
 
 
+# The application class.
 class App < Sinatra::Base
 
   set :environment, :production

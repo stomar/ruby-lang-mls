@@ -5,6 +5,8 @@ require "uri"
 require "json"
 
 module MLS
+
+  # Retrieves mailer stats via API.
   class MailerStats
 
     def initialize(options)

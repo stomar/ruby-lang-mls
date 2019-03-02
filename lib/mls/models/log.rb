@@ -4,6 +4,7 @@ require "dm-core"
 require "dm-migrations"
 
 
+# Log model.
 class Log
 
   include DataMapper::Resource

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module MLS
+
+  # A subscribe/unsubscribe request.
   class Request
 
     attr_reader :list, :email, :action

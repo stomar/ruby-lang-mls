@@ -4,6 +4,7 @@ require "dm-core"
 require "dm-migrations"
 
 
+# DailyStats model.
 class DailyStats
 
   include DataMapper::Resource
