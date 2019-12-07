@@ -51,17 +51,17 @@ describe SampleRequest do
 
   it "returns the correct default request" do
     request = SampleRequest.new
-    request.to_s.must_equal "action=subscribe&email=john.doe%40test.org&list=ruby-talk"
+    _(request.to_s).must_equal "action=subscribe&email=john.doe%40test.org&list=ruby-talk"
   end
 
   it "can return a request with a replaced field" do
     request = SampleRequest.new.replace(:action, "unsubscribe")
-    request.to_s.must_equal "action=unsubscribe&email=john.doe%40test.org&list=ruby-talk"
+    _(request.to_s).must_equal "action=unsubscribe&email=john.doe%40test.org&list=ruby-talk"
   end
 
   it "can return a request without a specified field" do
     request = SampleRequest.new.without(:action)
-    request.to_s.must_equal "email=john.doe%40test.org&list=ruby-talk"
+    _(request.to_s).must_equal "email=john.doe%40test.org&list=ruby-talk"
   end
 end
 
@@ -69,7 +69,7 @@ end
 describe "application environment" do
 
   it "uses UTC as local time zone" do
-    Time.now.strftime("%z").must_equal "+0000"
+    _(Time.now.strftime("%z")).must_equal "+0000"
   end
 end
 
@@ -89,42 +89,42 @@ describe "request validation" do
     capture_io do
       post "/submit?#{@request.without(:email)}"
     end
-    last_response.body.must_match "Invalid"
+    _(last_response.body).must_match "Invalid"
   end
 
   it "fails for whitespace-only email" do
     capture_io do
       post "/submit?#{@request.replace(:email, '    ')}"
     end
-    last_response.body.must_match "Invalid"
+    _(last_response.body).must_match "Invalid"
   end
 
   it "fails for nonexistent mailing list" do
     capture_io do
       post "/submit?#{@request.replace(:list, 'ruby-test')}"
     end
-    last_response.body.must_match "Invalid"
+    _(last_response.body).must_match "Invalid"
   end
 
   it "fails for missing mailing list" do
     capture_io do
       post "/submit?#{@request.without(:list)}"
     end
-    last_response.body.must_match "Invalid"
+    _(last_response.body).must_match "Invalid"
   end
 
   it "fails for invalid action" do
     capture_io do
       post "/submit?#{@request.replace(:action, 'login')}"
     end
-    last_response.body.must_match "Invalid"
+    _(last_response.body).must_match "Invalid"
   end
 
   it "fails for missing action" do
     capture_io do
       post "/submit?#{@request.without(:action)}"
     end
-    last_response.body.must_match "Invalid"
+    _(last_response.body).must_match "Invalid"
   end
 
   it "does not mind additional fields" do
@@ -135,7 +135,7 @@ describe "request validation" do
     capture_io do
       post "/submit?#{@request.add(:first_name, 'John')}"
     end
-    last_response.body.must_match "<h1>Confirmation</h1>"
+    _(last_response.body).must_match "<h1>Confirmation</h1>"
   end
 end
 
@@ -167,7 +167,7 @@ describe "email sending" do
       post "/submit?#{@request}"
     end
     Pony.verify
-    last_response.body.must_match "<h1>Confirmation</h1>"
+    _(last_response.body).must_match "<h1>Confirmation</h1>"
   end
 
   it "indicates an error for failed send process" do
@@ -180,6 +180,6 @@ describe "email sending" do
     capture_io do
       post "/submit?#{@request}"
     end
-    last_response.body.must_match "<h1>Error</h1>"
+    _(last_response.body).must_match "<h1>Error</h1>"
   end
 end
