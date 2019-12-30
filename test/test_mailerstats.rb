@@ -13,7 +13,7 @@ describe MLS::MailerStats do
     response = '{ "Data" : [{ "DeliveredCount" : 7 }] }'
 
     @mailerstats.stub(:request_json_data, response) do
-      _(@mailerstats.get).must_match /\ASent emails today: +7\Z/
+      _(@mailerstats.get).must_match %r{\ASent emails today: +7\Z}
     end
   end
 end
