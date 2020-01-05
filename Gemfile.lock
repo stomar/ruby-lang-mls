@@ -1,8 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.6.0)
-      public_suffix (>= 2.0.2, < 4.0)
+    addressable (2.7.0)
+      public_suffix (>= 2.0.2, < 5.0)
     daemons (1.3.1)
     data_objects (0.10.17)
       addressable (~> 2.1)
@@ -26,30 +26,32 @@ GEM
     eventmachine (1.2.7)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
-    mini_mime (1.0.1)
-    minitest (5.11.3)
-    mustermann (1.0.3)
-    pony (1.12)
+    mini_mime (1.0.2)
+    minitest (5.13.0)
+    mustermann (1.1.1)
+      ruby2_keywords (~> 0.0.1)
+    pony (1.13.1)
       mail (>= 2.0)
-    public_suffix (3.0.3)
-    rack (2.0.6)
-    rack-protection (2.0.5)
+    public_suffix (4.0.2)
+    rack (2.0.8)
+    rack-protection (2.0.8.1)
       rack
     rack-ssl (1.4.1)
       rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
-    rake (12.3.2)
-    sinatra (2.0.5)
+    rake (13.0.1)
+    ruby2_keywords (0.0.1)
+    sinatra (2.0.8.1)
       mustermann (~> 1.0)
       rack (~> 2.0)
-      rack-protection (= 2.0.5)
+      rack-protection (= 2.0.8.1)
       tilt (~> 2.0)
     thin (1.7.2)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
       rack (>= 1, < 3)
-    tilt (2.0.9)
+    tilt (2.0.10)
 
 PLATFORMS
   ruby
@@ -61,7 +63,7 @@ DEPENDENCIES
   dm-sqlite-adapter
   minitest
   pony
-  rack (>= 2.0.6)
+  rack (>= 2.0.8)
   rack-ssl
   rack-test
   rake
@@ -69,7 +71,7 @@ DEPENDENCIES
   thin
 
 RUBY VERSION
-   ruby 2.6.0p0
+   ruby 2.6.5p114
 
 BUNDLED WITH
    1.17.2
