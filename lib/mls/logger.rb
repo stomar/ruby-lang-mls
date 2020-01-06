@@ -58,8 +58,9 @@ module MLS
       return  if @no_logs
 
       time = Time.now.utc
+      time_string = time.strftime("%Y-%m-%d %H:%M:%S %z")
 
-      warn time.strftime("[%Y-%m-%d %H:%M:%S %z]") + " #{list}, #{action}, #{status}"
+      warn "[#{time_string}] #{list}, #{action}, #{status}"
       warn "#{exception.class}: #{exception}"  if exception
 
       return  unless @db
