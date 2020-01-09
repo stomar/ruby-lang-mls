@@ -92,7 +92,7 @@ class App < Sinatra::Base
         status = :success
         settings.logger.log(@ml_request.list, @ml_request.action)
         settings.stats.increment(@ml_request.list, @ml_request.action)
-      rescue => e
+      rescue StandardError => e
         status = :error
         settings.logger.log_error(@ml_request.list, @ml_request.action, e)
       end
