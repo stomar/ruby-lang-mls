@@ -28,8 +28,8 @@ begin
   DataMapper.setup(:default, DATABASE_URL)
   DataMapper.auto_upgrade!
   DB = true
-rescue StandardError, LoadError => error
-  warn "Error initializing database: #{error.class}: #{error}"
+rescue StandardError, LoadError => e
+  warn "Error initializing database: #{e.class}: #{e}"
   DB = false
 end
 
@@ -92,9 +92,9 @@ class App < Sinatra::Base
         status = :success
         settings.logger.log(@ml_request.list, @ml_request.action)
         settings.stats.increment(@ml_request.list, @ml_request.action)
-      rescue => error
+      rescue => e
         status = :error
-        settings.logger.log_error(@ml_request.list, @ml_request.action, error)
+        settings.logger.log_error(@ml_request.list, @ml_request.action, e)
       end
     else
       status = :invalid
