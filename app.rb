@@ -4,7 +4,7 @@
 #
 # project home page: https://github.com/stomar/ruby-lang-mls
 #
-# Copyright (C) 2013-2019 Marcus Stollsteimer
+# Copyright (C) 2013-2020 Marcus Stollsteimer
 #
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 
