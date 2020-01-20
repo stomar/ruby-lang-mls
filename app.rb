@@ -21,7 +21,7 @@ SMTP_ADDRESS = ENV["SMTP_SERVER"] || ""
 SMTP_PORT    = ENV["SMTP_PORT"] || "587"
 NO_CONFIRM   = ENV["NO_CONFIRM"] == "true"
 NO_LOGS      = ENV["NO_LOGS"] == "true"
-DATABASE_URL = ENV["DATABASE_URL"] || "sqlite3://#{Dir.pwd}/development.db"
+DATABASE_URL = ENV["DATABASE_URL"] || "sqlite3://#{Dir.pwd}/db/development.db"
 
 
 begin
