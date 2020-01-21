@@ -28,9 +28,9 @@ module MLS
       return ["No logs available"]  unless @db
 
       entries = if limit
-                  Log.all(order: [:timestamp.desc], limit: limit).to_a.reverse
+                  Log.reverse(:timestamp).limit(limit).to_a.reverse
                 else
-                  Log.all(order: [:timestamp.asc])
+                  Log.order(:timestamp)
                 end
 
       entries.map(&:to_string)
@@ -44,9 +44,9 @@ module MLS
       return ["No logs available"]  unless @db
 
       entries = if limit
-                  Log.all(:status.not => "Success", :order => [:timestamp.desc], :limit => limit).to_a.reverse
+                  Log.exclude(status: "Success").reverse(:timestamp).limit(limit).to_a.reverse
                 else
-                  Log.all(:status.not => "Success", :order => [:timestamp.asc])
+                  Log.exclude(status: "Success").order(:timestamp)
                 end
 
       entries.map(&:to_string)
