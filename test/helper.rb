@@ -12,8 +12,8 @@ def setup_database
 end
 
 def teardown_database
-  Log.destroy  if DB
-  DailyStats.destroy  if DB
+  Log.dataset.destroy  if DB
+  DailyStats.dataset.destroy  if DB
 end
 
 def silence_warnings
