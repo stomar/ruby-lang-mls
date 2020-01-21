@@ -2,7 +2,7 @@
 
 require "minitest/autorun"
 
-ENV["DATABASE_URL"] = "sqlite::memory:"
+ENV["DATABASE_URL"] = "sqlite:/"
 
 require_relative "../app"
 
