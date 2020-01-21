@@ -17,6 +17,16 @@ Rake::TestTask.new do |t|
 end
 
 
+namespace :db do
+
+  desc "Set up the database tables"
+  task :setup do
+    require_relative "app"
+    load "db/schema.rb"
+  end
+end
+
+
 desc "List all log entries"
 task :logs do
   require_relative "app"
