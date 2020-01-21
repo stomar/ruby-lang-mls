@@ -1,28 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.7.0)
-      public_suffix (>= 2.0.2, < 5.0)
     daemons (1.3.1)
-    data_objects (0.10.17)
-      addressable (~> 2.1)
-    dm-core (1.2.1)
-      addressable (~> 2.3)
-    dm-do-adapter (1.2.0)
-      data_objects (~> 0.10.6)
-      dm-core (~> 1.2.0)
-    dm-migrations (1.2.0)
-      dm-core (~> 1.2.0)
-    dm-postgres-adapter (1.2.0)
-      dm-do-adapter (~> 1.2.0)
-      do_postgres (~> 0.10.6)
-    dm-sqlite-adapter (1.2.0)
-      dm-do-adapter (~> 1.2.0)
-      do_sqlite3 (~> 0.10.6)
-    do_postgres (0.10.17)
-      data_objects (= 0.10.17)
-    do_sqlite3 (0.10.17)
-      data_objects (= 0.10.17)
     eventmachine (1.2.7)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
@@ -33,7 +12,6 @@ GEM
     pg (1.2.2)
     pony (1.13.1)
       mail (>= 2.0)
-    public_suffix (4.0.3)
     rack (2.0.8)
     rack-protection (2.0.8.1)
       rack
@@ -60,10 +38,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  dm-core
-  dm-migrations
-  dm-postgres-adapter
-  dm-sqlite-adapter
   minitest
   pg
   pony
