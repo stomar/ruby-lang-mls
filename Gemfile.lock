@@ -30,6 +30,7 @@ GEM
     minitest (5.13.0)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
+    pg (1.2.2)
     pony (1.13.1)
       mail (>= 2.0)
     public_suffix (4.0.3)
@@ -42,11 +43,13 @@ GEM
       rack (>= 1.0, < 3)
     rake (13.0.1)
     ruby2_keywords (0.0.2)
+    sequel (5.28.0)
     sinatra (2.0.8.1)
       mustermann (~> 1.0)
       rack (~> 2.0)
       rack-protection (= 2.0.8.1)
       tilt (~> 2.0)
+    sqlite3 (1.4.2)
     thin (1.7.2)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
@@ -62,12 +65,15 @@ DEPENDENCIES
   dm-postgres-adapter
   dm-sqlite-adapter
   minitest
+  pg
   pony
   rack (>= 2.0.8)
   rack-ssl
   rack-test
   rake
+  sequel
   sinatra
+  sqlite3
   thin
 
 RUBY VERSION

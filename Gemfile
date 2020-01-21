@@ -8,6 +8,7 @@ gem "rack", ">= 2.0.8"
 gem "rack-ssl"
 gem "thin"
 
+gem "sequel"
 gem "dm-core"
 gem "dm-migrations"
 
@@ -19,8 +20,10 @@ group :development do
   gem "dm-sqlite-adapter"
   gem "minitest"
   gem "rack-test"
+  gem "sqlite3"
 end
 
 group :production do
+  gem "pg"
   gem "dm-postgres-adapter"
 end
