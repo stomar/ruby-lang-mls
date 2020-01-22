@@ -9,9 +9,11 @@
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 
 require "sinatra/base"
-require "sequel"
 
 require_relative "lib/mls"
+
+require_relative "db/connection"
+require_relative "db/models"
 
 ENV["TZ"] = "UTC"
 
@@ -22,22 +24,6 @@ SMTP_ADDRESS = ENV["SMTP_SERVER"] || ""
 SMTP_PORT    = ENV["SMTP_PORT"] || "587"
 NO_CONFIRM   = ENV["NO_CONFIRM"] == "true"
 NO_LOGS      = ENV["NO_LOGS"] == "true"
-DATABASE_URL = ENV["DATABASE_URL"] || "sqlite://#{Dir.pwd}/db/development.db"
-
-
-begin
-  DB = Sequel.connect(DATABASE_URL)
-
-  # create tables for in-memory database
-  if ENV["DATABASE_URL"] == "sqlite:/"
-    load File.expand_path("db/schema.rb", __dir__)
-  end
-rescue StandardError, LoadError => e
-  warn "Error initializing database: #{e.class}: #{e}"
-  DB = false
-end
-
-require_relative "db/models"
 
 
 # The application class.
