@@ -11,6 +11,8 @@
 require "sinatra/base"
 require "sequel"
 
+require_relative "lib/mls"
+
 ENV["TZ"] = "UTC"
 
 SENDER_EMAIL = ENV["SENDER_EMAIL"]
@@ -35,7 +37,17 @@ rescue StandardError, LoadError => e
   DB = false
 end
 
-require_relative "lib/mls"
+if DB && DB.tables.include?(:logs) && DB.tables.include?(:daily_stats)
+  require_relative "models/log"
+  require_relative "models/dailystats"
+
+  model_classes = [Log, DailyStats]
+  model_classes.each(&:finalize_associations)
+  model_classes.each(&:freeze)
+  DB.freeze
+else
+  warn "Missing database tables - you might need to run `rake db:setup'."
+end
 
 
 # The application class.
