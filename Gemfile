@@ -8,19 +8,18 @@ gem "rack", ">= 2.0.8"
 gem "rack-ssl"
 gem "thin"
 
-gem "dm-core"
-gem "dm-migrations"
+gem "sequel"
 
 gem "pony"
 
 gem "rake"
 
 group :development do
-  gem "dm-sqlite-adapter"
   gem "minitest"
   gem "rack-test"
+  gem "sqlite3"
 end
 
 group :production do
-  gem "dm-postgres-adapter"
+  gem "pg"
 end

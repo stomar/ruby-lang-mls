@@ -20,7 +20,7 @@ module MLS
 
       date = timestamp.to_date
 
-      entry = DailyStats.first_or_create(date: date)
+      entry = DailyStats.find_or_create(date: date)
       entry.increment(list, action)
     end
 
@@ -28,9 +28,9 @@ module MLS
       return ["No stats available"]  unless @db
 
       entries = if limit
-                  DailyStats.all(order: [:date.desc], limit: limit).to_a.reverse
+                  DailyStats.reverse(:date).limit(limit).to_a.reverse
                 else
-                  DailyStats.all(order: [:date.asc])
+                  DailyStats.order(:date)
                 end
 
       [DailyStats.headers] + entries.map(&:to_string)

@@ -3,4 +3,7 @@
 require_relative "models/log"
 require_relative "models/dailystats"
 
-DataMapper.finalize
+model_classes = [Log, DailyStats]
+model_classes.each(&:finalize_associations)
+model_classes.each(&:freeze)
+DB.freeze

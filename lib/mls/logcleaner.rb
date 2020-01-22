@@ -15,7 +15,7 @@ module MLS
         return
       end
 
-      entries = Log.all(status: "Success")
+      entries = Log.where(status: "Success")
 
       entries.each do |entry|
         puts "Removing entry #{entry.id} (#{entry.timestamp})"
