@@ -31,7 +31,7 @@ desc "List all log entries"
 task :logs do
   require_relative "app"
 
-  puts MLS::Logger.new.entries.join("\n") << "\n"
+  puts MLS::Logger.new.entries
 end
 
 namespace :logs do
@@ -40,7 +40,7 @@ namespace :logs do
   task :errors do
     require_relative "app"
 
-    puts MLS::Logger.new.errors.join("\n") << "\n"
+    puts MLS::Logger.new.errors
   end
 
   desc "Cleanup logs"
@@ -57,7 +57,7 @@ desc "List all daily stats entries"
 task :stats do
   require_relative "app"
 
-  puts MLS::StatsHandler.new.entries.join("\n") << "\n"
+  puts MLS::StatsHandler.new.entries
 end
 
 
