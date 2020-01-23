@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "connection"
+
 if DB && DB.tables.include?(:logs) && DB.tables.include?(:daily_stats)
   require_relative "../models/log"
   require_relative "../models/dailystats"
