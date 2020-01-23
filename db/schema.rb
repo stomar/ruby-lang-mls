@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "connection"
+
 DB.create_table?(:logs) do
   primary_key :id
   DateTime :timestamp, null: false
