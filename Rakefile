@@ -4,8 +4,13 @@ require "rake/testtask"
 
 MAILER_API_URL = ENV["MAILER_API_URL"]
 MAILER_API_KEY = ENV["MAILER_API_KEY"]
-ADMIN_EMAIL    = ENV["ADMIN_EMAIL"]
 
+ADMIN_EMAIL = ENV["ADMIN_EMAIL"]
+SENDER_EMAIL = ENV["SENDER_EMAIL"]
+SMTP_USER = ENV["SMTP_USER"]
+SMTP_PASSWORD = ENV["SMTP_PASSWORD"]
+SMTP_ADDRESS = ENV["SMTP_SERVER"] || ""
+SMTP_PORT = ENV["SMTP_PORT"] || "587"
 
 task default: [:test]
 
@@ -21,15 +26,15 @@ namespace :db do
 
   desc "Set up the database tables"
   task :setup do
-    require_relative "app"
-    load "db/schema.rb"
+    require_relative "db/schema"
   end
 end
 
 
 desc "List all log entries"
 task :logs do
-  require_relative "app"
+  require_relative "lib/mls/logger"
+  require_relative "db/models"
 
   puts MLS::Logger.new.entries
 end
@@ -38,15 +43,16 @@ namespace :logs do
 
   desc "List log entries for failed requests"
   task :errors do
-    require_relative "app"
+    require_relative "lib/mls/logger"
+    require_relative "db/models"
 
     puts MLS::Logger.new.errors
   end
 
   desc "Cleanup logs"
   task :cleanup do
-    require_relative "app"
     require_relative "lib/mls/logcleaner"
+    require_relative "db/models"
 
     MLS::LogCleaner.new.cleanup_all
   end
@@ -55,7 +61,8 @@ end
 
 desc "List all daily stats entries"
 task :stats do
-  require_relative "app"
+  require_relative "lib/mls/statshandler"
+  require_relative "db/models"
 
   puts MLS::StatsHandler.new.entries
 end
@@ -80,7 +87,7 @@ namespace :mailer do
 
   desc "Test email delivery"
   task :test do
-    require_relative "app"
+    require_relative "lib/mls/mailer"
 
     if ADMIN_EMAIL
       mailer = MLS::Mailer.new(

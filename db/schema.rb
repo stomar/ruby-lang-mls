@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
-DB.create_table?(:logs) do
+require_relative "connection"
+
+unless DB.tables.empty?
+  warn "Database does already have tables. Not loading schema."
+  exit 1
+end
+
+DB.create_table(:logs) do
   primary_key :id
   DateTime :timestamp, null: false
   String :list, size: 9, null: false
@@ -9,7 +16,7 @@ DB.create_table?(:logs) do
   String :exception, size: 35
 end
 
-DB.create_table?(:daily_stats) do
+DB.create_table(:daily_stats) do
   primary_key :id
   Date :date, null: false
   Integer :talk_subsc, default: 0

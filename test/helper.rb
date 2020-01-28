@@ -4,6 +4,8 @@ require "minitest/autorun"
 
 ENV["DATABASE_URL"] = "sqlite:/"
 
+require_relative "../db/schema"
+require_relative "../db/models"
 require_relative "../app"
 
 
@@ -12,8 +14,7 @@ def setup_database
 end
 
 def teardown_database
-  Log.dataset.destroy  if DB
-  DailyStats.dataset.destroy  if DB
+  DB.tables.each {|table| DB[table].delete }
 end
 
 def silence_warnings
