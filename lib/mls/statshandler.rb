@@ -24,16 +24,10 @@ module MLS
       entry.increment(list, action)
     end
 
-    def entries(limit: nil)
+    def entries
       return ["No stats available"]  unless @db
 
-      entries = if limit
-                  DailyStats.reverse(:date).limit(limit).all.reverse
-                else
-                  DailyStats.order(:date).all
-                end
-
-      entries
+      DailyStats.order(:date).all
     end
   end
 end

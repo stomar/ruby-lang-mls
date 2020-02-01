@@ -24,32 +24,22 @@ module MLS
       add_to_log(list, action, "Error", exception)
     end
 
-    def entries(limit: nil)
+    def entries
       return ["No logs available"]  unless @db
 
-      entries = if limit
-                  Log.reverse(:timestamp).limit(limit).all.reverse
-                else
-                  Log.order(:timestamp).all
-                end
-
-      entries
+      Log.order(:timestamp).all
     end
 
-    def recent_entries
-      entries(limit: 40)
-    end
-
-    def errors(limit: nil)
+    def recent_entries(limit: 40)
       return ["No logs available"]  unless @db
 
-      entries = if limit
-                  Log.exclude(status: "Success").reverse(:timestamp).limit(limit).all.reverse
-                else
-                  Log.exclude(status: "Success").order(:timestamp).all
-                end
+      Log.reverse(:timestamp).limit(limit).all.reverse
+    end
 
-      entries
+    def errors
+      return ["No logs available"]  unless @db
+
+      Log.exclude(status: "Success").order(:timestamp).all
     end
 
     private
