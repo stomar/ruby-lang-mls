@@ -8,7 +8,9 @@ class Log < Sequel::Model
     exclude :errors, status: "Success"
 
     def recent_by_date(limit = 40)
-      Log.reverse(:timestamp).limit(limit).all.reverse
+      ids = reverse(:timestamp).limit(limit).select(:id)
+
+      where(id: ids).by_date
     end
   end
 

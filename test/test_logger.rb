@@ -53,7 +53,7 @@ describe MLS::Logger do
       end
     end
 
-    _(@logger.recent_entries.size).must_equal 40
+    _(@logger.recent_entries.count).must_equal 40
     _(@logger.recent_entries.last.to_s).must_match "ruby-talk, latest"
   end
 
