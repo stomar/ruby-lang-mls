@@ -27,19 +27,19 @@ module MLS
     def entries
       return ["No logs available"]  unless @db
 
-      Log.order(:timestamp).all
+      Log.by_date.all
     end
 
     def recent_entries(limit: 40)
       return ["No logs available"]  unless @db
 
-      Log.reverse(:timestamp).limit(limit).all.reverse
+      Log.recent_by_date(limit)
     end
 
     def errors
       return ["No logs available"]  unless @db
 
-      Log.exclude(status: "Success").order(:timestamp).all
+      Log.errors.by_date.all
     end
 
     private

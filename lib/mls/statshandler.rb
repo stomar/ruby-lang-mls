@@ -27,7 +27,7 @@ module MLS
     def entries
       return ["No stats available"]  unless @db
 
-      DailyStats.order(:date).all
+      DailyStats.by_date.all
     end
   end
 end

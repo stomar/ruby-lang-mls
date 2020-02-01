@@ -3,6 +3,10 @@
 # DailyStats model.
 class DailyStats < Sequel::Model
 
+  dataset_module do
+    order :by_date, :date
+  end
+
   def self.headers
     %w[date talk_subsc talk_unsub core_subsc core_unsub
        doc_subsc doc_unsub cvs_subsc cvs_unsub].join(",")
