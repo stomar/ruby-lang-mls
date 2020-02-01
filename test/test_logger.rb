@@ -37,29 +37,4 @@ describe MLS::Logger do
 
     _(Log.last.to_s).must_match %r{Error +\(ruby-talk, test error\) RuntimeError\z}
   end
-
-  it "can return all entries in correct order" do
-    _(Log.count).must_equal 6
-    _(Log.by_date.first.to_s).must_match %r{2000-01-02 12:00:01.*test_first}
-    _(Log.by_date.last.to_s).must_match  %r{2000-01-02 12:00:06.*test_last}
-  end
-
-  it "can return recent entries in correct order" do
-    some_time_ago = Time.utc(2010, 1, 1)
-    capture_io do
-      @logger.log("ruby-talk", "latest")
-      Time.stub(:now, some_time_ago) do
-        42.times { @logger.log("ruby-talk", "older") }
-      end
-    end
-
-    _(Log.recent_by_date.count).must_equal 40
-    _(Log.recent_by_date.last.to_s).must_match "ruby-talk, latest"
-  end
-
-  it "can return all errors in correct order" do
-    _(Log.errors.count).must_equal 2
-    _(Log.errors.by_date.first.to_s).must_match %r{2000-01-02 12:00:03.*test_error}
-    _(Log.errors.by_date.last.to_s).must_match  %r{2000-01-02 12:00:04.*test_invalid}
-  end
 end

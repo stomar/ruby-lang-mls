@@ -44,10 +44,4 @@ describe MLS::StatsHandler do
     stats = DailyStats.first(date: Date.new(2010, 1, 1)).to_s
     _(stats).must_match "2010-01-01,0,1"
   end
-
-  it "can return all entries in correct order" do
-    _(DailyStats.count).must_equal 2
-    _(DailyStats.by_date.first.to_s).must_match "2000-01-01,7"
-    _(DailyStats.by_date.last.to_s).must_match "2000-01-02,4"
-  end
 end
