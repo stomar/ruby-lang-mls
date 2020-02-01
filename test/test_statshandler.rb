@@ -47,7 +47,7 @@ describe MLS::StatsHandler do
 
   it "can return all entries in correct order" do
     _(DailyStats.count).must_equal 2
-    _(@stats.entries[0].to_s).must_match "2000-01-01,7"
-    _(@stats.entries[1].to_s).must_match "2000-01-02,4"
+    _(DailyStats.by_date.first.to_s).must_match "2000-01-01,7"
+    _(DailyStats.by_date.last.to_s).must_match "2000-01-02,4"
   end
 end

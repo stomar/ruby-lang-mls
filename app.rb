@@ -105,6 +105,11 @@ class App < Sinatra::Base
 
   get "/logs/?" do
     content_type :txt
-    settings.logger.recent_entries.join("\n") << "\n"
+
+    if DB
+      Log.recent_by_date.all.join("\n") << "\n"
+    else
+      "No logs available\n"
+    end
   end
 end

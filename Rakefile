@@ -33,20 +33,18 @@ end
 
 desc "List all log entries"
 task :logs do
-  require_relative "lib/mls/logger"
   require_relative "db/models"
 
-  puts MLS::Logger.new.entries
+  puts Log.by_date.all
 end
 
 namespace :logs do
 
   desc "List log entries for failed requests"
   task :errors do
-    require_relative "lib/mls/logger"
     require_relative "db/models"
 
-    puts MLS::Logger.new.errors
+    puts Log.errors.by_date.all
   end
 
   desc "Cleanup logs"
@@ -61,11 +59,10 @@ end
 
 desc "List all daily stats entries"
 task :stats do
-  require_relative "lib/mls/statshandler"
   require_relative "db/models"
 
   puts DailyStats.headers
-  puts MLS::StatsHandler.new.entries
+  puts DailyStats.by_date.all
 end
 
 

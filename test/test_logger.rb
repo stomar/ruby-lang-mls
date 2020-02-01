@@ -39,9 +39,9 @@ describe MLS::Logger do
   end
 
   it "can return all entries in correct order" do
-    _(@logger.entries.size).must_equal 6
-    _(@logger.entries.first.to_s).must_match %r{2000-01-02 12:00:01.*test_first}
-    _(@logger.entries.last.to_s).must_match  %r{2000-01-02 12:00:06.*test_last}
+    _(Log.count).must_equal 6
+    _(Log.by_date.first.to_s).must_match %r{2000-01-02 12:00:01.*test_first}
+    _(Log.by_date.last.to_s).must_match  %r{2000-01-02 12:00:06.*test_last}
   end
 
   it "can return recent entries in correct order" do
@@ -53,13 +53,13 @@ describe MLS::Logger do
       end
     end
 
-    _(@logger.recent_entries.count).must_equal 40
-    _(@logger.recent_entries.last.to_s).must_match "ruby-talk, latest"
+    _(Log.recent_by_date.count).must_equal 40
+    _(Log.recent_by_date.last.to_s).must_match "ruby-talk, latest"
   end
 
   it "can return all errors in correct order" do
-    _(@logger.errors.size).must_equal 2
-    _(@logger.errors.first.to_s).must_match %r{2000-01-02 12:00:03.*test_error}
-    _(@logger.errors.last.to_s).must_match  %r{2000-01-02 12:00:04.*test_invalid}
+    _(Log.errors.count).must_equal 2
+    _(Log.errors.by_date.first.to_s).must_match %r{2000-01-02 12:00:03.*test_error}
+    _(Log.errors.by_date.last.to_s).must_match  %r{2000-01-02 12:00:04.*test_invalid}
   end
 end

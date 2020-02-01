@@ -24,24 +24,6 @@ module MLS
       add_to_log(list, action, "Error", exception)
     end
 
-    def entries
-      return ["No logs available"]  unless @db
-
-      Log.by_date.all
-    end
-
-    def recent_entries(limit: 40)
-      return ["No logs available"]  unless @db
-
-      Log.recent_by_date(limit)
-    end
-
-    def errors
-      return ["No logs available"]  unless @db
-
-      Log.errors.by_date.all
-    end
-
     private
 
     def add_to_log(list, action, status, exception = nil)

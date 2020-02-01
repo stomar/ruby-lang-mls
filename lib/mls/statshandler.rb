@@ -23,11 +23,5 @@ module MLS
       entry = DailyStats.find_or_create(date: date)
       entry.increment(list, action)
     end
-
-    def entries
-      return ["No stats available"]  unless @db
-
-      DailyStats.by_date.all
-    end
   end
 end
