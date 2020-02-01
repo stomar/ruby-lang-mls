@@ -28,12 +28,12 @@ module MLS
       return ["No logs available"]  unless @db
 
       entries = if limit
-                  Log.reverse(:timestamp).limit(limit).to_a.reverse
+                  Log.reverse(:timestamp).limit(limit).all.reverse
                 else
-                  Log.order(:timestamp)
+                  Log.order(:timestamp).all
                 end
 
-      entries.map(&:to_s)
+      entries
     end
 
     def recent_entries
@@ -44,12 +44,12 @@ module MLS
       return ["No logs available"]  unless @db
 
       entries = if limit
-                  Log.exclude(status: "Success").reverse(:timestamp).limit(limit).to_a.reverse
+                  Log.exclude(status: "Success").reverse(:timestamp).limit(limit).all.reverse
                 else
-                  Log.exclude(status: "Success").order(:timestamp)
+                  Log.exclude(status: "Success").order(:timestamp).all
                 end
 
-      entries.map(&:to_s)
+      entries
     end
 
     private

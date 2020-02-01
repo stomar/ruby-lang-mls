@@ -28,12 +28,12 @@ module MLS
       return ["No stats available"]  unless @db
 
       entries = if limit
-                  DailyStats.reverse(:date).limit(limit).to_a.reverse
+                  DailyStats.reverse(:date).limit(limit).all.reverse
                 else
-                  DailyStats.order(:date)
+                  DailyStats.order(:date).all
                 end
 
-      [DailyStats.headers] + entries.map(&:to_s)
+      [DailyStats.headers] + entries
     end
   end
 end
