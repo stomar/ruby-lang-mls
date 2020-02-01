@@ -11,7 +11,8 @@
 require "sinatra/base"
 
 require_relative "lib/mls"
-require_relative "db/models"
+require_relative "db/connection"
+require_relative "db/models"  if DB
 
 ENV["TZ"] = "UTC"
 
