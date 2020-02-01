@@ -14,8 +14,7 @@ describe Log do
   end
 
   it "can be created" do
-    entry = { timestamp: Time.utc(2010, 1, 1), status: "Success", list: "ruby-talk", action: "subscribe" }
-    Log.create(entry)
+    create_log
   end
 
   it "can return all entries in correct order" do

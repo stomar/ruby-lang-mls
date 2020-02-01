@@ -23,3 +23,22 @@ def silence_warnings
 ensure
   $VERBOSE = original_verbose
 end
+
+def create_log(attributes = {})
+  defaults = {
+    timestamp: Time.now.utc,
+    list: "default",
+    action: "default",
+    status: "default"
+  }
+
+  DB[:logs].insert(defaults.merge(attributes))
+end
+
+def create_dailystats(attributes = {})
+  defaults = {
+    date: Time.now.utc.to_date
+  }
+
+  DB[:daily_stats].insert(defaults.merge(attributes))
+end

@@ -14,8 +14,7 @@ describe DailyStats do
   end
 
   it "can be created" do
-    entry = { date: Date.new(2000, 1, 1), talk_subsc: 1 }
-    DailyStats.create(entry)
+    create_dailystats
   end
 
   it "can return all entries in correct order" do
