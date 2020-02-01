@@ -64,6 +64,7 @@ task :stats do
   require_relative "lib/mls/statshandler"
   require_relative "db/models"
 
+  puts DailyStats.headers
   puts MLS::StatsHandler.new.entries
 end
 

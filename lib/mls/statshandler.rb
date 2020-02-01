@@ -33,7 +33,7 @@ module MLS
                   DailyStats.order(:date).all
                 end
 
-      [DailyStats.headers] + entries
+      entries
     end
   end
 end

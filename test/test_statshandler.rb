@@ -42,9 +42,8 @@ describe MLS::StatsHandler do
   end
 
   it "can return all entries in correct order" do
-    _(@stats.entries.size).must_equal 3
-    _(@stats.entries[0].to_s).must_match "date,talk_subsc"
-    _(@stats.entries[1].to_s).must_match "2000-01-01,7"
-    _(@stats.entries[2].to_s).must_match "2000-01-02,4"
+    _(@stats.entries.size).must_equal 2
+    _(@stats.entries[0].to_s).must_match "2000-01-01,7"
+    _(@stats.entries[1].to_s).must_match "2000-01-02,4"
   end
 end
