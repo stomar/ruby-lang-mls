@@ -19,7 +19,7 @@ describe MLS::Logger do
       @logger.log("ruby-talk", "test success")
     end
 
-    _(@logger.entries.last.to_s).must_match "Success (ruby-talk, test success)"
+    _(Log.last.to_s).must_match "Success (ruby-talk, test success)"
   end
 
   it "can log an entry (invalid)" do
@@ -27,7 +27,7 @@ describe MLS::Logger do
       @logger.log_invalid("ruby-talk", "test invalid")
     end
 
-    _(@logger.entries.last.to_s).must_match "Invalid (ruby-talk, test invalid)"
+    _(Log.last.to_s).must_match "Invalid (ruby-talk, test invalid)"
   end
 
   it "can log an entry (error)" do
@@ -35,7 +35,7 @@ describe MLS::Logger do
       @logger.log_error("ruby-talk", "test error", RuntimeError.new("message"))
     end
 
-    _(@logger.entries.last.to_s).must_match %r{Error +\(ruby-talk, test error\) RuntimeError\z}
+    _(Log.last.to_s).must_match %r{Error +\(ruby-talk, test error\) RuntimeError\z}
   end
 
   it "can return all entries in correct order" do
