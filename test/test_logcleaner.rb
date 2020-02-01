@@ -17,13 +17,13 @@ describe MLS::LogCleaner do
 
   it "can clean up logs" do
     _(Log.all.size).must_equal 6
-    _(Log.all.map(&:to_string).grep(/Success/)).wont_be_empty
+    _(Log.all.map(&:to_s).grep(/Success/)).wont_be_empty
 
     capture_io do
       @logcleaner.cleanup_all
     end
 
     _(Log.all.size).must_equal 2
-    _(Log.all.map(&:to_string).grep(/Success/)).must_be_empty
+    _(Log.all.map(&:to_s).grep(/Success/)).must_be_empty
   end
 end

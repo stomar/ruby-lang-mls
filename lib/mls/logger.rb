@@ -33,7 +33,7 @@ module MLS
                   Log.order(:timestamp)
                 end
 
-      entries.map(&:to_string)
+      entries.map(&:to_s)
     end
 
     def recent_entries
@@ -49,7 +49,7 @@ module MLS
                   Log.exclude(status: "Success").order(:timestamp)
                 end
 
-      entries.map(&:to_string)
+      entries.map(&:to_s)
     end
 
     private

@@ -8,7 +8,7 @@ class DailyStats < Sequel::Model
        doc_subsc doc_unsub cvs_subsc cvs_unsub].join(",")
   end
 
-  def to_string
+  def to_s
     [date, talk_subsc, talk_unsub, core_subsc, core_unsub,
      doc_subsc, doc_unsub, cvs_subsc, cvs_unsub].map(&:to_s).join(",")
   end

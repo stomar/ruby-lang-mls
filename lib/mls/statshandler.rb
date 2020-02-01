@@ -33,7 +33,7 @@ module MLS
                   DailyStats.order(:date)
                 end
 
-      [DailyStats.headers] + entries.map(&:to_string)
+      [DailyStats.headers] + entries.map(&:to_s)
     end
   end
 end
