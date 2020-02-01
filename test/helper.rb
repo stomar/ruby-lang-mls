@@ -9,9 +9,7 @@ require_relative "../db/models"
 require_relative "../app"
 
 
-def setup_database
-  load File.expand_path("fixtures.rb", __dir__)
-end
+def setup_database; end
 
 def teardown_database
   DB.tables.each {|table| DB[table].delete }
