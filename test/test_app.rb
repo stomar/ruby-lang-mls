@@ -51,17 +51,20 @@ describe SampleRequest do
 
   it "returns the correct default request" do
     request = SampleRequest.new
-    _(request.to_s).must_equal "action=subscribe&email=john.doe%40test.org&list=ruby-talk"
+    expected = "action=subscribe&email=john.doe%40test.org&list=ruby-talk"
+    _(request.to_s).must_equal expected
   end
 
   it "can return a request with a replaced field" do
     request = SampleRequest.new.replace(:action, "unsubscribe")
-    _(request.to_s).must_equal "action=unsubscribe&email=john.doe%40test.org&list=ruby-talk"
+    expected = "action=unsubscribe&email=john.doe%40test.org&list=ruby-talk"
+    _(request.to_s).must_equal expected
   end
 
   it "can return a request without a specified field" do
     request = SampleRequest.new.without(:action)
-    _(request.to_s).must_equal "email=john.doe%40test.org&list=ruby-talk"
+    expected = "email=john.doe%40test.org&list=ruby-talk"
+    _(request.to_s).must_equal expected
   end
 end
 

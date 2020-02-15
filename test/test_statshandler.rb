@@ -17,7 +17,7 @@ describe MLS::StatsHandler do
   it "can increment an existing entry (1)" do
     create_dailystats(date: Date.new(2000, 1, 2), talk_subsc: 4)
 
-    @stats.increment("ruby-talk", "subscribe", timestamp: Time.utc(2000, 1, 2, 12, 0, 10))
+    @stats.increment("ruby-talk", "subscribe", timestamp: Time.utc(2000, 1, 2))
 
     stats = DailyStats.first(date: Date.new(2000, 1, 2)).to_s
     _(stats).must_match "2000-01-02,5"
@@ -26,7 +26,7 @@ describe MLS::StatsHandler do
   it "can increment an existing entry (2)" do
     create_dailystats(date: Date.new(2000, 1, 2), talk_subsc: 4)
 
-    @stats.increment("ruby-core", "unsubscribe", timestamp: Time.utc(2000, 1, 2, 12, 0, 10))
+    @stats.increment("ruby-core", "unsubscribe", timestamp: Time.utc(2000, 1, 2))
 
     stats = DailyStats.first(date: Date.new(2000, 1, 2)).to_s
     _(stats).must_match "2000-01-02,4,0,0,1"

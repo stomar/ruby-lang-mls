@@ -3,7 +3,8 @@
 require_relative "connection"
 
 unless DB && DB.tables.sort == %i[daily_stats logs]
-  warn "Required database tables missing. You might need to run `rake db:setup'."
+  warn "Required database tables missing. " \
+       "You might need to run `rake db:setup'."
   exit 1
 end
 
