@@ -102,14 +102,4 @@ class App < Sinatra::Base
       erb :confirmation
     end
   end
-
-  get "/logs/?" do
-    content_type :txt
-
-    if DB
-      Log.recent_by_date.all.join("\n") << "\n"
-    else
-      "No logs available\n"
-    end
-  end
 end
