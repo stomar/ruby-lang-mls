@@ -40,6 +40,13 @@ end
 
 namespace :logs do
 
+  desc "List recent log entries"
+  task :recent do
+    require_relative "db/models"
+
+    puts Log.recent_by_date.all
+  end
+
   desc "List log entries for failed requests"
   task :errors do
     require_relative "db/models"
