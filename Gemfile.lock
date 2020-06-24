@@ -12,7 +12,7 @@ GEM
     pg (1.2.2)
     pony (1.13.1)
       mail (>= 2.0)
-    rack (2.0.8)
+    rack (2.1.4)
     rack-protection (2.0.8.1)
       rack
     rack-ssl (1.4.1)
