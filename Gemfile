@@ -11,6 +11,7 @@ gem "thin"
 gem "sequel"
 
 gem "pony"
+gem "net-smtp"
 
 gem "rake"
 
