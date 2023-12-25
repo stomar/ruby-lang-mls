@@ -161,7 +161,7 @@ describe "email sending" do
     }
 
     silence_warnings do
-      Pony = MiniTest::Mock.new
+      Pony = Minitest::Mock.new
     end
 
     Pony.expect(:mail, nil, [expected])
