@@ -16,9 +16,9 @@ require_relative "db/models"  if DB
 
 ENV["TZ"] = "UTC"
 
-SENDER_EMAIL = ENV["SENDER_EMAIL"]
-SMTP_USER    = ENV["SMTP_USER"]
-SMTP_PASSWORD = ENV["SMTP_PASSWORD"]
+SENDER_EMAIL = ENV.fetch("SENDER_EMAIL", nil)
+SMTP_USER    = ENV.fetch("SMTP_USER", nil)
+SMTP_PASSWORD = ENV.fetch("SMTP_PASSWORD", nil)
 SMTP_ADDRESS = ENV["SMTP_SERVER"] || ""
 SMTP_PORT    = ENV["SMTP_PORT"] || "587"
 NO_CONFIRM   = ENV["NO_CONFIRM"] == "true"
