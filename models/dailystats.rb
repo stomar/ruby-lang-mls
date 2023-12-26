@@ -27,6 +27,6 @@ class DailyStats < Sequel::Model
   private
 
   def column_from_list_action(list, action)
-    "#{list.gsub(/ruby-/, '')}_#{action[0..4]}".to_sym
+    "#{list.gsub('ruby-', '')}_#{action[0..4]}".to_sym
   end
 end
