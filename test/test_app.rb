@@ -10,7 +10,6 @@ def app
   App
 end
 
-
 class SampleRequest
 
   def initialize
