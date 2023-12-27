@@ -4,8 +4,6 @@ require_relative "helper"
 
 require "rack/test"
 
-include Rack::Test::Methods
-
 def app
   App
 end
@@ -77,6 +75,7 @@ end
 
 
 describe "request validation" do
+  include Rack::Test::Methods
 
   before do
     setup_database
@@ -143,6 +142,7 @@ end
 
 
 describe "email sending" do
+  include Rack::Test::Methods
 
   before do
     setup_database
