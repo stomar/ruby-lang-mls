@@ -10,8 +10,8 @@ gem "thin"
 
 gem "sequel"
 
-gem "pony"
 gem "net-smtp"
+gem "pony"
 
 gem "rake"
 
