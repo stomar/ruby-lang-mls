@@ -15,13 +15,6 @@ def teardown_database
   DB.tables.each {|table| DB[table].delete }
 end
 
-def silence_warnings
-  original_verbose, $VERBOSE = $VERBOSE, nil
-  yield
-ensure
-  $VERBOSE = original_verbose
-end
-
 def create_log(attributes = {})
   defaults = {
     timestamp: Time.now.utc,
