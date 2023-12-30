@@ -129,12 +129,11 @@ describe "request validation" do
   end
 
   it "does not mind additional fields" do
-    silence_warnings do
-      def Pony.mail(options); end
-    end
-
-    capture_io do
-      post "/submit?#{@request.add(:first_name, 'John')}"
+    # stub out Pony.mail to prevent actual mail request
+    Pony.stub(:mail, "no-op") do
+      capture_io do
+        post "/submit?#{@request.add(:first_name, 'John')}"
+      end
     end
     _(last_response.body).must_match "<h1>Confirmation</h1>"
   end
@@ -154,33 +153,38 @@ describe "email sending" do
   end
 
   it "sends an email for a vaild request" do
-    expected = {
+    expected_arg = {
       to: "ruby-talk-request@ruby-lang.org",
       body: "subscribe address=john.doe@test.org"
     }
 
-    silence_warnings do
-      Pony = Minitest::Mock.new
+    mock = Minitest::Mock.new
+    mock.expect(:call, nil, [expected_arg])
+
+    Pony.stub(:mail, mock) do
+      capture_io do
+        post "/submit?#{@request}"
+      end
     end
 
-    Pony.expect(:mail, nil, [expected])
-
-    capture_io do
-      post "/submit?#{@request}"
-    end
-    Pony.verify
+    mock.verify
     _(last_response.body).must_match "<h1>Confirmation</h1>"
   end
 
   it "indicates an error for failed send process" do
-    silence_warnings do
-      def Pony.mail(_options)
-        raise "fake exception"
+    # stub that succeeds
+    Pony.stub(:mail, ->(_) { "no-op" }) do
+      capture_io do
+        post "/submit?#{@request}"
       end
     end
+    _(last_response.body).must_match "<h1>Confirmation</h1>"
 
-    capture_io do
-      post "/submit?#{@request}"
+    # stub that errors
+    Pony.stub(:mail, ->(_) { raise "mock exception" }) do
+      capture_io do
+        post "/submit?#{@request}"
+      end
     end
     _(last_response.body).must_match "<h1>Error</h1>"
   end
